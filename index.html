@@ -8,16 +8,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 <style>
+/* ===== COLOR SCHEME - Warm Cream/Gold/Brown from Booklet ===== */
 :root {
-  --cream: #FAF6F0;
-  --gold: #C4973B;
+  --cream: #F8F4ED;
+  --gold: #B8943E;
   --gold-light: #D4AA4F;
-  --gold-dark: #A07A2E;
+  --gold-dark: #8B7025;
   --dark: #2C1810;
+  --dark-accent: #3D2B1F;
   --text: #3A2A1A;
   --text-light: #6B5B4B;
-  --blush: #F2E6DC;
+  --blush: #F0E8DC;
   --border: #D4C4B0;
+  --accent: #6B4C2A;
   --white: #FFFFFF;
   --shadow: rgba(44, 24, 16, 0.1);
   --shadow-md: rgba(44, 24, 16, 0.15);
@@ -48,734 +51,809 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.3;
 }
 
-.script {
-  font-family: 'Great Vibes', cursive;
+img { max-width: 100%; height: auto; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--gold); }
+
+/* ===== NAVIGATION ===== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(44, 24, 16, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 2px solid var(--gold);
+  padding: 0;
 }
 
-/* ===== COVER SECTION ===== */
-.cover {
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 60px;
+}
+
+.nav-brand {
+  font-family: 'Great Vibes', cursive;
+  color: var(--gold-light);
+  font-size: 1.4rem;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.nav-links a {
+  color: #F0E8DC;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--gold-light);
+  background: rgba(184, 148, 62, 0.15);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 5px;
+  z-index: 1001;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--gold-light);
+  transition: all 0.3s;
+}
+
+/* ===== COVER / HERO ===== */
+.hero {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: linear-gradient(180deg, var(--dark) 0%, #1a0f08 40%, #2C1810 100%);
+  padding: 100px 20px 60px;
+  background: linear-gradient(135deg, var(--dark) 0%, var(--dark-accent) 40%, #4A3320 100%);
   position: relative;
   overflow: hidden;
-  padding: 40px 20px;
 }
 
-.cover::before {
+.hero::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(ellipse at center top, rgba(196, 151, 59, 0.15) 0%, transparent 60%),
-              radial-gradient(ellipse at center bottom, rgba(196, 151, 59, 0.1) 0%, transparent 50%);
-  pointer-events: none;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(184, 148, 62, 0.08) 0%, transparent 70%);
 }
 
-.cover-label {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(1.2rem, 3vw, 1.8rem);
-  color: var(--gold-light);
-  margin-bottom: 24px;
-  position: relative;
-  z-index: 1;
-  letter-spacing: 1px;
-}
-
-.cover-portrait {
-  width: clamp(200px, 40vw, 300px);
-  height: clamp(200px, 40vw, 300px);
+.hero-portrait {
+  width: 260px;
+  height: 260px;
   border-radius: 50%;
   object-fit: cover;
-  object-position: center top;
-  border: 4px solid var(--gold);
-  box-shadow: 0 0 60px rgba(196, 151, 59, 0.3), 0 0 120px rgba(196, 151, 59, 0.1);
+  object-position: top center;
+  border: 5px solid var(--gold);
+  box-shadow: 0 0 40px rgba(184, 148, 62, 0.3), 0 0 80px rgba(184, 148, 62, 0.1);
+  margin-bottom: 30px;
   position: relative;
   z-index: 1;
-  margin-bottom: 32px;
 }
 
-.cover-memory {
+.hero-cross {
+  font-size: 2rem;
+  color: var(--gold-light);
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1rem, 2.5vw, 1.3rem);
-  color: var(--border);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  position: relative;
-  z-index: 1;
-  margin-bottom: 8px;
-  font-weight: 400;
-}
-
-.cover-name {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(2.8rem, 8vw, 5rem);
-  color: var(--gold);
-  position: relative;
-  z-index: 1;
-  margin-bottom: 16px;
-  text-shadow: 0 2px 20px rgba(196, 151, 59, 0.3);
-}
-
-.cover-dates {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1rem, 2.5vw, 1.4rem);
-  color: var(--border);
-  letter-spacing: 2px;
-  position: relative;
-  z-index: 1;
-  margin-bottom: 32px;
+  font-size: 3.5rem;
   font-weight: 300;
-}
-
-.cover-divider {
-  width: 80px;
-  height: 1px;
-  background: var(--gold);
-  margin: 0 auto 32px;
+  color: var(--gold-light);
+  letter-spacing: 4px;
+  margin-bottom: 8px;
   position: relative;
   z-index: 1;
 }
 
-.cover-quote {
+.hero-subtitle {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2rem;
+  color: var(--gold);
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-dates {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  color: #D4C4B0;
+  letter-spacing: 3px;
+  margin-bottom: 25px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-scripture {
+  max-width: 560px;
   font-family: 'Lora', serif;
   font-style: italic;
-  font-size: clamp(0.9rem, 2vw, 1.05rem);
-  color: rgba(212, 196, 176, 0.8);
-  max-width: 500px;
+  font-size: 1rem;
+  color: #B0A090;
+  line-height: 1.8;
   position: relative;
   z-index: 1;
-  line-height: 1.8;
 }
 
-.cover-quote cite {
+.hero-scripture cite {
   display: block;
   margin-top: 8px;
   font-style: normal;
-  color: var(--gold-light);
-  font-size: 0.9em;
-}
-
-.scroll-indicator {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-  animation: scrollBounce 2s infinite;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.scroll-indicator svg {
-  width: 24px;
-  height: 24px;
-  stroke: var(--gold-light);
-  opacity: 0.6;
-}
-
-@keyframes scrollBounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-  40% { transform: translateX(-50%) translateY(-8px); }
-  60% { transform: translateX(-50%) translateY(-4px); }
-}
-
-/* ===== STICKY NAV ===== */
-.sticky-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(44, 24, 16, 0.97);
-  border-bottom: 1px solid rgba(196, 151, 59, 0.3);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.nav-inner {
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.nav-inner::-webkit-scrollbar {
-  display: none;
-}
-
-.nav-link {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--border);
-  text-decoration: none;
-  padding: 14px 16px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: color 0.3s ease;
-  position: relative;
-}
-
-.nav-link:hover,
-.nav-link.active {
   color: var(--gold);
+  font-size: 0.9rem;
 }
 
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 2px;
+.hero-divider {
+  width: 80px;
+  height: 1px;
   background: var(--gold);
-  transition: width 0.3s ease;
+  margin: 20px auto;
+  position: relative;
+  z-index: 1;
 }
 
-.nav-link:hover::after,
-.nav-link.active::after {
-  width: 60%;
-}
-
-/* ===== SECTIONS ===== */
+/* ===== SECTION STYLING ===== */
 .section {
   padding: 80px 20px;
 }
 
-.section-inner {
-  max-width: 800px;
+.section-alt {
+  background: var(--blush);
+}
+
+.section-dark {
+  background: linear-gradient(135deg, var(--dark) 0%, var(--dark-accent) 100%);
+  color: #F0E8DC;
+}
+
+.section-dark h2,
+.section-dark h3 {
+  color: var(--gold-light);
+}
+
+.section-dark p,
+.section-dark li {
+  color: #D4C4B0;
+}
+
+.container {
+  max-width: 900px;
   margin: 0 auto;
 }
 
-.section-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.8rem, 4vw, 2.4rem);
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-header h2 {
+  font-size: 2.4rem;
   color: var(--dark);
-  text-align: center;
-  margin-bottom: 8px;
-  font-weight: 600;
+  margin-bottom: 10px;
 }
 
-.section-subtitle {
-  font-family: 'Lora', serif;
-  font-size: 1rem;
-  color: var(--text-light);
-  text-align: center;
-  margin-bottom: 48px;
-  font-style: italic;
+.section-dark .section-header h2 {
+  color: var(--gold-light);
 }
 
-.section-divider {
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin: 16px auto 48px;
+.section-header .ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
 }
 
-.gold-bg {
-  background: linear-gradient(180deg, var(--blush) 0%, var(--cream) 100%);
+.section-header .ornament span {
+  width: 50px;
+  height: 1px;
+  background: var(--gold);
 }
 
-/* ===== CHURCH HEADER ===== */
-.church-header {
-  background: var(--dark);
-  padding: 60px 20px;
-  text-align: center;
-}
-
-.church-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.4rem, 3.5vw, 2rem);
+.section-header .ornament-icon {
   color: var(--gold);
-  font-weight: 600;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
+  font-size: 0.9rem;
 }
 
-.church-subtitle {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1rem, 2.5vw, 1.3rem);
-  color: var(--border);
-  font-weight: 300;
-  letter-spacing: 1px;
-}
-
-.church-cross {
-  color: var(--gold);
-  font-size: 1.5rem;
-  margin-bottom: 16px;
+.section-dark .section-header .ornament span {
+  background: var(--gold);
 }
 
 /* ===== ORDER OF SERVICE ===== */
-.ministers-box {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 32px;
-  margin-bottom: 40px;
-  box-shadow: 0 2px 12px var(--shadow);
+.service-timeline {
+  position: relative;
+  padding-left: 30px;
 }
 
-.ministers-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.3rem;
-  color: var(--gold);
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.minister-item {
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(212, 196, 176, 0.3);
-  display: flex;
-  flex-direction: column;
-}
-
-.minister-item:last-child {
-  border-bottom: none;
-}
-
-.minister-name {
-  font-weight: 600;
-  color: var(--dark);
-  font-size: 0.95rem;
-}
-
-.minister-church {
-  font-size: 0.85rem;
-  color: var(--text-light);
-  font-style: italic;
-}
-
-.service-items {
-  list-style: none;
+.service-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--gold), var(--border), var(--gold));
 }
 
 .service-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 18px 24px;
+  position: relative;
+  margin-bottom: 28px;
+  padding: 20px 25px;
   background: var(--white);
-  border: 1px solid var(--border);
   border-radius: 10px;
-  margin-bottom: 12px;
-  box-shadow: 0 1px 6px var(--shadow);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 10px var(--shadow);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .service-item:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px var(--shadow-md);
+  transform: translateX(5px);
+  box-shadow: 0 4px 20px var(--shadow-md);
 }
 
-.service-icon {
-  font-size: 1.4rem;
-  flex-shrink: 0;
-  width: 36px;
-  text-align: center;
-  padding-top: 2px;
-}
-
-.service-content {
-  flex: 1;
-}
-
-.service-label {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 2px;
-}
-
-.service-detail {
-  font-size: 0.95rem;
-  color: var(--text);
-}
-
-.service-detail a {
-  color: var(--gold);
-  text-decoration: none;
-  border-bottom: 1px dotted var(--gold-light);
-  transition: color 0.2s;
-}
-
-.service-detail a:hover {
-  color: var(--gold-dark);
-}
-
-.tribute-sub-items {
-  margin-top: 8px;
-  padding-left: 0;
-  list-style: none;
-}
-
-.tribute-sub-item {
-  padding: 4px 0 4px 16px;
-  font-size: 0.9rem;
-  color: var(--text-light);
-  border-left: 2px solid var(--border);
-  margin-bottom: 4px;
-}
-
-.tribute-sub-item strong {
-  color: var(--text);
-}
-
-/* ===== HYMN CARDS ===== */
-.hymn-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 40px;
-  margin-bottom: 32px;
-  box-shadow: 0 2px 16px var(--shadow);
-  position: relative;
-  overflow: hidden;
-}
-
-.hymn-card::before {
+.service-item::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
-}
-
-.hymn-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.4rem, 3vw, 1.8rem);
-  color: var(--dark);
-  text-align: center;
-  margin-bottom: 32px;
-  font-weight: 600;
-}
-
-.hymn-verse {
-  margin-bottom: 24px;
-}
-
-.verse-label {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-}
-
-.verse-text {
-  font-style: italic;
-  color: var(--text);
-  line-height: 1.9;
-  font-size: 0.95rem;
-}
-
-.verse-text .line {
-  display: block;
-}
-
-.chorus-ref {
-  color: var(--text-light);
-  font-size: 0.85rem;
-  font-style: italic;
-  margin-bottom: 24px;
-}
-
-/* ===== SCRIPTURE SECTION ===== */
-.version-toggle {
-  display: flex;
-  justify-content: center;
-  gap: 0;
-  margin-bottom: 40px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 50px;
-  padding: 4px;
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.version-btn {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  padding: 10px 28px;
-  border: none;
-  background: transparent;
-  color: var(--text-light);
-  cursor: pointer;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-}
-
-.version-btn.active {
+  left: -37px;
+  top: 26px;
+  width: 12px;
+  height: 12px;
   background: var(--gold);
-  color: var(--white);
-  box-shadow: 0 2px 8px rgba(196, 151, 59, 0.3);
+  border: 3px solid var(--white);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--gold);
 }
 
-.scripture-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 36px;
-  margin-bottom: 24px;
-  box-shadow: 0 2px 12px var(--shadow);
+.service-item-header {
+  display: flex;
+  align-items: baseline;
+  gap: 15px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
 }
 
-.scripture-ref {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.4rem;
-  color: var(--gold);
-  font-weight: 600;
-  margin-bottom: 16px;
-  text-align: center;
+.service-item h3 {
+  font-size: 1.15rem;
+  color: var(--dark);
 }
 
-.scripture-text {
-  font-size: 0.95rem;
-  line-height: 1.9;
-  color: var(--text);
+.service-item .minister {
+  font-size: 0.9rem;
+  color: var(--accent);
+  font-style: italic;
 }
 
-.scripture-text .verse-num {
-  font-weight: 700;
-  color: var(--gold);
-  font-size: 0.75rem;
-  vertical-align: super;
-  margin-right: 2px;
-}
-
-.scripture-version {
-  display: none;
-}
-
-.scripture-version.active {
+.service-item .church {
+  font-size: 0.8rem;
+  color: var(--text-light);
   display: block;
+  margin-top: 2px;
 }
 
-/* ===== TRIBUTES ===== */
-.tribute-card {
+.service-item .song-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 5px 14px;
+  background: linear-gradient(135deg, var(--accent), var(--gold-dark));
+  color: #fff;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s;
+}
+
+.service-item .song-link:hover {
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  transform: scale(1.05);
+  color: #fff;
+}
+
+/* ===== SONGS ===== */
+.hymn-card {
   background: var(--white);
-  border: 1px solid var(--border);
   border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 12px var(--shadow);
+  border: 1px solid var(--border);
+  margin-bottom: 25px;
   overflow: hidden;
+  box-shadow: 0 2px 10px var(--shadow);
 }
 
-.tribute-header {
-  padding: 20px 28px;
+.hymn-header {
+  padding: 18px 25px;
+  background: linear-gradient(135deg, var(--dark), var(--dark-accent));
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  transition: background 0.2s ease;
   user-select: none;
+  transition: background 0.3s;
 }
 
-.tribute-header:hover {
-  background: var(--blush);
+.hymn-header:hover {
+  background: linear-gradient(135deg, var(--dark-accent), #4A3320);
 }
 
-.tribute-header-left {
-  display: flex;
-  flex-direction: column;
+.hymn-header h3 {
+  color: var(--gold-light);
+  font-size: 1.2rem;
 }
 
-.tribute-author-label {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.75rem;
-  font-weight: 600;
+.hymn-header .toggle-icon {
   color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  font-size: 1.4rem;
+  transition: transform 0.3s;
 }
 
-.tribute-author-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--dark);
+.hymn-header.open .toggle-icon {
+  transform: rotate(45deg);
 }
 
-.tribute-toggle {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--blush);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: transform 0.3s ease, background 0.2s ease;
+.hymn-body {
+  display: none;
+  padding: 25px;
+  line-height: 1.9;
 }
 
-.tribute-card.open .tribute-toggle {
-  transform: rotate(180deg);
-  background: var(--gold);
+.hymn-body.open {
+  display: block;
 }
 
-.tribute-card.open .tribute-toggle svg {
-  stroke: var(--white);
-}
-
-.tribute-toggle svg {
-  width: 16px;
-  height: 16px;
-  stroke: var(--gold);
-  stroke-width: 2.5;
-  fill: none;
-}
-
-.tribute-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease;
-}
-
-.tribute-body-inner {
-  padding: 0 28px 28px;
-  border-top: 1px solid var(--border);
-}
-
-.tribute-body-inner p {
-  margin-bottom: 16px;
-  font-size: 0.95rem;
-  line-height: 1.8;
-  color: var(--text);
-}
-
-.tribute-body-inner p:last-child {
-  margin-bottom: 0;
-}
-
-.tribute-closing {
-  font-style: italic;
-  color: var(--gold);
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-  text-align: center;
-}
-
-.tribute-signed {
-  font-style: italic;
-  color: var(--text-light);
-  text-align: right;
-  margin-top: 16px;
-}
-
-/* ===== BURIAL ===== */
-.burial-info {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.burial-location {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.5rem;
-  color: var(--dark);
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.burial-address {
-  font-size: 0.95rem;
-  color: var(--text-light);
-  margin-bottom: 4px;
-}
-
-.burial-time {
-  font-size: 1.1rem;
-  color: var(--gold);
-  font-weight: 600;
-}
-
-/* ===== DIRECTIONS ===== */
-.directions-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 32px;
-  margin-bottom: 32px;
-  box-shadow: 0 2px 12px var(--shadow);
-}
-
-.directions-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.3rem;
-  color: var(--dark);
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.directions-address {
-  font-size: 0.95rem;
-  color: var(--text-light);
+.hymn-body .verse {
   margin-bottom: 20px;
 }
 
-.map-embed {
-  width: 100%;
-  height: 300px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+.hymn-body .verse-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.hymn-body p {
+  margin-bottom: 4px;
+  font-size: 0.95rem;
+}
+
+/* ===== SCRIPTURES ===== */
+.scripture-toggle-wrap {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.scripture-toggle {
+  display: inline-flex;
+  border-radius: 30px;
   overflow: hidden;
+  border: 2px solid var(--gold);
 }
 
-.map-embed iframe {
-  width: 100%;
-  height: 100%;
+.scripture-toggle button {
+  padding: 10px 28px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
   border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: transparent;
+  color: var(--text);
 }
 
-/* ===== DONATIONS ===== */
-.donate-section {
+.scripture-toggle button.active {
+  background: var(--gold);
+  color: var(--white);
+}
+
+.scripture-toggle button:hover:not(.active) {
+  background: rgba(184, 148, 62, 0.15);
+}
+
+.scripture-card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 30px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 10px var(--shadow);
+}
+
+.scripture-card h3 {
+  font-size: 1.4rem;
+  color: var(--dark);
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.scripture-card .verse-text {
+  font-style: italic;
+  line-height: 1.9;
+  color: var(--text);
+}
+
+.scripture-card .verse-text .verse-num {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.8rem;
+  vertical-align: super;
+  margin-right: 2px;
+}
+
+/* ===== TRIBUTES ===== */
+.tribute-group-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin: 40px 0 20px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tribute-group-title:first-of-type {
+  margin-top: 0;
+}
+
+.tribute-card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin-bottom: 18px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px var(--shadow);
+  transition: box-shadow 0.3s;
+}
+
+.tribute-card:hover {
+  box-shadow: 0 4px 20px var(--shadow-md);
+}
+
+.tribute-header {
+  padding: 18px 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  user-select: none;
+  transition: background 0.3s;
+  background: linear-gradient(135deg, rgba(107, 76, 42, 0.04), rgba(184, 148, 62, 0.04));
+}
+
+.tribute-header:hover {
+  background: linear-gradient(135deg, rgba(107, 76, 42, 0.08), rgba(184, 148, 62, 0.08));
+}
+
+.tribute-headshot {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--gold);
+  flex-shrink: 0;
+}
+
+.tribute-header-info {
+  flex: 1;
+}
+
+.tribute-header-info h3 {
+  font-size: 1.1rem;
+  color: var(--dark);
+  margin-bottom: 2px;
+}
+
+.tribute-header-info .tribute-relation {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+.tribute-header .toggle-icon {
+  color: var(--gold);
+  font-size: 1.4rem;
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+
+.tribute-header.open .toggle-icon {
+  transform: rotate(45deg);
+}
+
+.tribute-body {
+  display: none;
+  padding: 0 25px 25px;
+}
+
+.tribute-body.open {
+  display: block;
+}
+
+.tribute-body p {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.tribute-body .read-more-btn {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 6px 18px;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--accent);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.tribute-body .read-more-btn:hover {
+  background: var(--gold);
+  color: var(--white);
+}
+
+.tribute-body .tribute-extra {
+  display: none;
+}
+
+.tribute-body .tribute-extra.open {
+  display: block;
+}
+
+.tribute-body blockquote {
+  margin: 15px 0;
+  padding: 15px 20px;
+  border-left: 3px solid var(--gold);
+  background: var(--blush);
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+/* ===== GALLERY ===== */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.gallery-item {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  box-shadow: 0 2px 10px var(--shadow);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  background: var(--white);
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px var(--shadow-md);
+}
+
+.gallery-item img {
+  width: 100%;
+  display: block;
+  aspect-ratio: auto;
+}
+
+.gallery-item .gallery-caption {
+  padding: 12px 15px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  color: var(--text-light);
   text-align: center;
 }
 
-.donate-message {
-  font-size: 1rem;
-  color: var(--text);
-  margin-bottom: 32px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.8;
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.92);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.lightbox.open {
+  display: flex;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: #fff;
+  font-size: 2.5rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.3s;
+  z-index: 2001;
+}
+
+.lightbox-close:hover {
+  color: var(--gold-light);
+}
+
+/* ===== BURIAL ===== */
+.burial-schedule {
+  display: grid;
+  gap: 20px;
+}
+
+.burial-item {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 25px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 10px var(--shadow);
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.burial-time {
+  background: linear-gradient(135deg, var(--dark), var(--dark-accent));
+  color: var(--gold-light);
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.burial-time .time {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.burial-time .period {
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.burial-info h3 {
+  font-size: 1.15rem;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+
+.burial-info p {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+/* ===== DIRECTIONS ===== */
+.directions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+.direction-card {
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 10px var(--shadow);
+}
+
+.direction-card h3 {
+  padding: 18px 20px 5px;
+  font-size: 1.15rem;
+  color: var(--dark);
+}
+
+.direction-card p {
+  padding: 0 20px 15px;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.direction-card iframe {
+  width: 100%;
+  height: 250px;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+/* ===== DONATIONS ===== */
+.donate-box {
+  max-width: 550px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.donate-box .donate-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  color: var(--gold-light);
+  margin-bottom: 5px;
+}
+
+.donate-box .donate-note {
+  color: #B0A090;
+  font-size: 0.95rem;
+  margin-bottom: 30px;
+}
+
+.donate-phone {
+  display: inline-block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  margin-bottom: 30px;
+  letter-spacing: 2px;
 }
 
 .donate-buttons {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  gap: 18px;
   justify-content: center;
-  margin-bottom: 24px;
+  flex-wrap: wrap;
 }
 
 .donate-btn {
@@ -783,1125 +861,1239 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 10px;
   padding: 14px 32px;
-  border-radius: 50px;
+  border-radius: 30px;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 700;
   letter-spacing: 1px;
   text-decoration: none;
-  transition: all 0.3s ease;
-  border: 2px solid var(--gold);
-}
-
-.donate-btn.primary {
-  background: var(--gold);
-  color: var(--white);
-}
-
-.donate-btn.primary:hover {
-  background: var(--gold-dark);
-  border-color: var(--gold-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(196, 151, 59, 0.3);
-}
-
-.donate-btn.secondary {
-  background: transparent;
-  color: var(--gold);
-}
-
-.donate-btn.secondary:hover {
-  background: var(--gold);
-  color: var(--white);
-  transform: translateY(-2px);
-}
-
-/* ===== ACKNOWLEDGMENT ===== */
-.acknowledgment {
-  text-align: center;
-  padding: 80px 20px;
-  background: linear-gradient(180deg, var(--cream) 0%, var(--blush) 100%);
-}
-
-.acknowledgment-text {
-  font-size: 1.05rem;
-  color: var(--text);
-  max-width: 600px;
-  margin: 0 auto 32px;
-  line-height: 1.9;
-}
-
-.acknowledgment-quote {
-  font-style: italic;
-  font-size: 1rem;
-  color: var(--gold);
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.acknowledgment-quote cite {
-  display: block;
-  margin-top: 8px;
-  font-style: normal;
-  font-weight: 600;
-}
-
-/* ===== GALLERY ===== */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px;
-}
-
-.gallery-item {
-  aspect-ratio: 1;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 2px solid var(--border);
-  box-shadow: 0 2px 8px var(--shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s;
   cursor: pointer;
+  border: none;
 }
 
-.gallery-item:hover {
-  transform: scale(1.03);
-  box-shadow: 0 6px 20px var(--shadow-md);
+.donate-btn.cashapp {
+  background: #00D632;
+  color: #fff;
 }
 
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.donate-btn.cashapp:hover {
+  background: #00B82A;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 214, 50, 0.3);
+  color: #fff;
+}
+
+.donate-btn.zelle {
+  background: #6D1ED4;
+  color: #fff;
+}
+
+.donate-btn.zelle:hover {
+  background: #5A18B0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(109, 30, 212, 0.3);
+  color: #fff;
+}
+
+/* ===== ACKNOWLEDGMENTS ===== */
+.ack-text {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.9;
 }
 
 /* ===== FOOTER ===== */
 .footer {
-  background: var(--dark);
-  padding: 60px 20px;
   text-align: center;
+  padding: 40px 20px;
+  background: var(--dark);
+  color: #B0A090;
+  border-top: 2px solid var(--gold);
 }
 
-.footer-name {
+.footer .footer-name {
   font-family: 'Great Vibes', cursive;
-  font-size: clamp(2rem, 5vw, 3rem);
-  color: var(--gold);
+  font-size: 2rem;
+  color: var(--gold-light);
   margin-bottom: 8px;
 }
 
-.footer-dates {
+.footer .footer-dates {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1rem;
-  color: var(--border);
+  font-size: 1.1rem;
+  color: #D4C4B0;
   letter-spacing: 2px;
-  margin-bottom: 24px;
+  margin-bottom: 15px;
 }
 
-.footer-divider {
-  width: 60px;
-  height: 1px;
-  background: var(--gold);
-  margin: 0 auto 24px;
-}
-
-.footer-quote {
+.footer .footer-verse {
   font-style: italic;
   font-size: 0.9rem;
-  color: rgba(212, 196, 176, 0.7);
   max-width: 500px;
-  margin: 0 auto 24px;
-  line-height: 1.8;
+  margin: 0 auto;
 }
 
-.footer-quote cite {
-  display: block;
-  margin-top: 8px;
-  font-style: normal;
-  color: var(--gold-light);
-  font-size: 0.85em;
-}
-
-.footer-cross {
-  font-size: 1.8rem;
-  color: var(--gold);
-  opacity: 0.6;
-}
-
-/* ===== LIGHTBOX ===== */
-.lightbox {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.92);
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.lightbox.active {
-  display: flex;
-}
-
-.lightbox img {
-  max-width: 90vw;
-  max-height: 90vh;
-  object-fit: contain;
-  border-radius: 4px;
-}
-
-.lightbox-close {
-  position: absolute;
-  top: 20px;
-  right: 24px;
-  font-size: 2rem;
-  color: white;
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-family: 'Cormorant Garamond', serif;
-}
-
-/* ===== RESPONSIVE ===== */
+/* ===== MOBILE RESPONSIVE ===== */
 @media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: rgba(44, 24, 16, 0.98);
+    flex-direction: column;
+    padding: 20px;
+    gap: 4px;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: 12px 20px;
+    font-size: 1rem;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .hero h1 {
+    font-size: 2.4rem;
+    letter-spacing: 2px;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .hero-portrait {
+    width: 200px;
+    height: 200px;
+  }
+
   .section {
-    padding: 60px 16px;
+    padding: 50px 15px;
   }
 
-  .nav-link {
-    font-size: 0.75rem;
-    padding: 12px 10px;
-    letter-spacing: 0.5px;
+  .section-header h2 {
+    font-size: 1.9rem;
   }
 
-  .hymn-card {
-    padding: 24px;
-  }
-
-  .service-item {
-    padding: 14px 16px;
-    gap: 12px;
-  }
-
-  .ministers-box {
-    padding: 20px;
-  }
-
-  .tribute-header {
-    padding: 16px 20px;
-  }
-
-  .tribute-body-inner {
-    padding: 0 20px 20px;
-  }
-
-  .directions-card {
-    padding: 20px;
+  .directions-grid {
+    grid-template-columns: 1fr;
   }
 
   .gallery-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
 
-  .scripture-card {
-    padding: 24px;
+  .burial-item {
+    flex-direction: column;
   }
 
-  .donate-btn {
-    padding: 12px 24px;
-    font-size: 1rem;
+  .service-item-header {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .donate-buttons {
+    flex-direction: column;
+    align-items: center;
   }
 }
 
 @media (max-width: 480px) {
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .hero h1 {
+    font-size: 2rem;
   }
-}
 
-/* ===== ANIMATIONS ===== */
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
+  .hero-subtitle {
+    font-size: 1.3rem;
+  }
 
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
+  .hero-portrait {
+    width: 170px;
+    height: 170px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
 <body>
 
-<!-- ===== COVER ===== -->
-<section class="cover" id="top">
-  <span class="cover-label">Celebration of Life</span>
-  <img src="images/main.JPG" alt="Cecilia Gyan" class="cover-portrait">
-  <p class="cover-memory">In Loving Memory of</p>
-  <h1 class="cover-name">Cecilia Gyan</h1>
-  <p class="cover-dates">December 24, 1944 &mdash; February 9, 2026</p>
-  <div class="cover-divider"></div>
-  <blockquote class="cover-quote">
-    &ldquo;The Lord is near to the brokenhearted and saves the crushed in spirit.&rdquo;
-    <cite>&mdash; Psalm 34:18</cite>
-  </blockquote>
-  <a href="#service" class="scroll-indicator" aria-label="Scroll down">
-    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-      <polyline points="6 9 12 15 18 9"></polyline>
-    </svg>
-  </a>
-</section>
-
-<!-- ===== STICKY NAV ===== -->
-<nav class="sticky-nav">
+<!-- ===== NAVIGATION ===== -->
+<nav class="nav" id="navbar">
   <div class="nav-inner">
-    <a href="#service" class="nav-link">Service</a>
-    <a href="#songs" class="nav-link">Songs</a>
-    <a href="#scriptures" class="nav-link">Scriptures</a>
-    <a href="#tributes" class="nav-link">Tributes</a>
-    <a href="#burial" class="nav-link">Burial</a>
-    <a href="#directions" class="nav-link">Directions</a>
-    <a href="#donate" class="nav-link">Donate</a>
+    <div class="nav-brand">Sweet Sixteen</div>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#service">Service</a>
+      <a href="#songs">Songs</a>
+      <a href="#scriptures">Scriptures</a>
+      <a href="#tributes">Tributes</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#burial">Burial</a>
+      <a href="#directions">Directions</a>
+      <a href="#donate">Donate</a>
+    </div>
   </div>
 </nav>
 
-<!-- ===== CHURCH HEADER ===== -->
-<div class="church-header">
-  <div class="church-cross">&#10013;</div>
-  <h2 class="church-name">Revival International Gospel Church (RIGC)</h2>
-  <p class="church-subtitle">Celebration of Life &amp; Funeral Service</p>
-</div>
-
-<!-- ===== ORDER OF SERVICE ===== -->
-<section class="section gold-bg" id="service">
-  <div class="section-inner">
-    <h2 class="section-title">Order of Service</h2>
-    <p class="section-subtitle">Mercadante Funeral Home &amp; Chapel &mdash; Saturday Morning, 9:00 AM &ndash; 11:00 AM</p>
-    <div class="section-divider"></div>
-
-    <div class="ministers-box fade-in">
-      <h3 class="ministers-title">Officiating Ministers</h3>
-      <div class="minister-item">
-        <span class="minister-name">Apostle Dr. Vasco Obroni</span>
-        <span class="minister-church">Christian Praise International Centre, Worcester, MA</span>
-      </div>
-      <div class="minister-item">
-        <span class="minister-name">Rev. Dubois Nyamikeh</span>
-        <span class="minister-church">Revival International Gospel Church (RIGC)</span>
-      </div>
-      <div class="minister-item">
-        <span class="minister-name">Rev. Nathaniel Achampong</span>
-        <span class="minister-church">LAIKOS International Church</span>
-      </div>
-      <div class="minister-item">
-        <span class="minister-name">Pastor Maryjane Anene</span>
-        <span class="minister-church">Throne of Grace Ministry, Holbrook, MA</span>
-      </div>
-    </div>
-
-    <ul class="service-items">
-      <li class="service-item fade-in">
-        <span class="service-icon">&#128591;</span>
-        <div class="service-content">
-          <div class="service-label">Moderator</div>
-          <div class="service-detail">Elder Dr. Courage Dziekpor</div>
-        </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#127932;</span>
-        <div class="service-content">
-          <div class="service-label">Opening Song</div>
-          <div class="service-detail">Mrs. Annin-Agyei &mdash; <a href="#hymn-it-is-well">It Is Well With My Soul</a></div>
-        </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#128591;</span>
-        <div class="service-content">
-          <div class="service-label">Opening Prayer</div>
-          <div class="service-detail">Elder Dr. Courage Dziekpor</div>
-        </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#127932;</span>
-        <div class="service-content">
-          <div class="service-label">Song</div>
-          <div class="service-detail">Mrs. Annin-Agyei &mdash; <a href="#hymn-amazing-grace">Amazing Grace</a></div>
-        </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#128214;</span>
-        <div class="service-content">
-          <div class="service-label">Bible Readings</div>
-          <div class="service-detail">Mrs. Annin-Agyei &mdash; <a href="#scripture-psalm23">Psalm 23</a>; <a href="#scripture-john14">John 14:1-4</a>; <a href="#scripture-2tim4">2 Timothy 4:6-7</a></div>
-        </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#127932;</span>
-        <div class="service-content">
-          <div class="service-label">Song</div>
-          <div class="service-detail">Mrs. Annin-Agyei &mdash; <a href="#hymn-i-surrender">I Surrender</a></div>
-        </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#128220;</span>
-        <div class="service-content">
-          <div class="service-label">Biography</div>
-          <div class="service-detail">Kwabena Bosompem</div>
-        </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#128144;</span>
-        <div class="service-content">
-          <div class="service-label">Tributes</div>
-          <div class="service-detail">
-            <ul class="tribute-sub-items">
-              <li class="tribute-sub-item"><strong>Family</strong> &mdash; Isaac Koranteng</li>
-              <li class="tribute-sub-item"><strong>Children</strong> &mdash; Josephine Nyamikeh</li>
-              <li class="tribute-sub-item"><strong>In-laws</strong> &mdash; Rev. Dubois Nyamikeh</li>
-              <li class="tribute-sub-item"><strong>Grandchildren</strong> &mdash; Bethany Nyamikeh</li>
-              <li class="tribute-sub-item"><strong>RIGC</strong> &mdash; Christine Peltier</li>
-            </ul>
-          </div>
-        </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#10013;</span>
-        <div class="service-content">
-          <div class="service-label">Word</div>
-          <div class="service-detail">Apostle Dr. Vasco Obroni</div>
-        </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#128591;</span>
-        <div class="service-content">
-          <div class="service-label">Prayer for the Family</div>
-          <div class="service-detail">Rev. Nathaniel Achampong</div>
-        </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#128226;</span>
-        <div class="service-content">
-          <div class="service-label">Announcements</div>
-          <div class="service-detail">Elder Dr. Courage Dziekpor</div>
-        </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#9904;</span>
-        <div class="service-content">
-          <div class="service-label">Final Viewing of the Body</div>
-        </div>
-      </li>
-    </ul>
+<!-- ===== HERO / COVER ===== -->
+<section class="hero" id="home">
+  <img src="images/main.JPG" alt="Cecilia Gyan" class="hero-portrait">
+  <div class="hero-cross">&#10013;</div>
+  <h1>CECILIA GYAN</h1>
+  <div class="hero-subtitle">"Sweet Sixteen"</div>
+  <div class="hero-divider"></div>
+  <div class="hero-dates">1945 &nbsp;&mdash;&nbsp; 2025</div>
+  <div class="hero-divider"></div>
+  <div class="hero-scripture">
+    "The Lord is close to the brokenhearted and saves those who are crushed in spirit."
+    <cite>&mdash; Psalm 34:18</cite>
   </div>
 </section>
 
-<!-- ===== HYMNS / SONGS ===== -->
-<section class="section" id="songs">
-  <div class="section-inner">
-    <h2 class="section-title">Hymns &amp; Songs</h2>
-    <div class="section-divider"></div>
+<!-- ===== ORDER OF SERVICE ===== -->
+<section class="section" id="service">
+  <div class="container">
+    <div class="section-header">
+      <h2>Order of Service</h2>
+      <div class="ornament"><span></span><span class="ornament-icon">&#10013;</span><span></span></div>
+    </div>
+    <div class="service-timeline">
 
-    <!-- It Is Well With My Soul -->
-    <div class="hymn-card fade-in" id="hymn-it-is-well">
-      <h3 class="hymn-title">It Is Well With My Soul</h3>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 1</div>
-        <div class="verse-text">
-          <span class="line">When peace like a river attendeth my way,</span>
-          <span class="line">When sorrows like sea billows roll;</span>
-          <span class="line">Whatever my lot, Thou hast taught me to say,</span>
-          <span class="line">It is well, it is well with my soul.</span>
+      <div class="service-item">
+        <div class="service-item-header">
+          <h3>Opening Prayer</h3>
+          <span class="minister">Rev. Isaac Osei Bonsu</span>
+        </div>
+        <span class="church">Church of Pentecost, Worcester</span>
+      </div>
+
+      <div class="service-item">
+        <div class="service-item-header">
+          <h3>Scripture Reading &mdash; Psalm 23</h3>
         </div>
       </div>
-      <div class="hymn-verse">
-        <div class="verse-label">Chorus</div>
-        <div class="verse-text">
-          <span class="line">It is well (it is well),</span>
-          <span class="line">With my soul (with my soul),</span>
-          <span class="line">It is well, it is well with my soul.</span>
+
+      <div class="service-item">
+        <div class="service-item-header">
+          <h3>Hymn</h3>
+        </div>
+        <a href="#song-it-is-well" class="song-link">&#9835; It Is Well with My Soul</a>
+      </div>
+
+      <div class="service-item">
+        <div class="service-item-header">
+          <h3>Scripture Reading &mdash; John 14:1-4</h3>
         </div>
       </div>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 2</div>
-        <div class="verse-text">
-          <span class="line">Though Satan should buffet, though trials should come,</span>
-          <span class="line">Let this blest assurance control,</span>
-          <span class="line">That Christ hath regarded my helpless estate,</span>
-          <span class="line">And hath shed His own blood for my soul.</span>
+
+      <div class="service-item">
+        <div class="service-item-header">
+          <h3>Hymn</h3>
+        </div>
+        <a href="#song-amazing-grace" class="song-link">&#9835; Amazing Grace</a>
+      </div>
+
+      <div class="service-item">
+        <div class="service-item-header">
+          <h3>Family Tribute</h3>
+          <span class="minister">Isaac Koranteng</span>
         </div>
       </div>
-      <div class="chorus-ref">(Chorus)</div>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 3</div>
-        <div class="verse-text">
-          <span class="line">My sin&mdash;oh, the bliss of this glorious thought!&mdash;</span>
-          <span class="line">My sin, not in part but the whole,</span>
-          <span class="line">Is nailed to the cross, and I bear it no more,</span>
-          <span class="line">Praise the Lord, praise the Lord, O my soul!</span>
+
+      <div class="service-item">
+        <div class="service-item-header">
+          <h3>Children's Tribute</h3>
         </div>
       </div>
-      <div class="chorus-ref">(Chorus)</div>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 4</div>
-        <div class="verse-text">
-          <span class="line">And, Lord, haste the day when the faith shall be sight,</span>
-          <span class="line">The clouds be rolled back as a scroll;</span>
-          <span class="line">The trump shall resound, and the Lord shall descend,</span>
-          <span class="line">Even so&mdash;it is well with my soul.</span>
+
+      <div class="service-item">
+        <div class="service-item-header">
+          <h3>Tribute from Sons-in-Law</h3>
         </div>
       </div>
-      <div class="chorus-ref">(Chorus)</div>
+
+      <div class="service-item">
+        <div class="service-item-header">
+          <h3>Church Tribute</h3>
+          <span class="minister">Revival International Gospel Church</span>
+        </div>
+      </div>
+
+      <div class="service-item">
+        <div class="service-item-header">
+          <h3>Hymn</h3>
+        </div>
+        <a href="#song-i-surrender" class="song-link">&#9835; I Surrender All</a>
+      </div>
+
+      <div class="service-item">
+        <div class="service-item-header">
+          <h3>Scripture Reading &mdash; 2 Timothy 4:6-7</h3>
+        </div>
+      </div>
+
+      <div class="service-item">
+        <div class="service-item-header">
+          <h3>Sermon</h3>
+          <span class="minister">Rev. Dubois Nyamikeh</span>
+        </div>
+        <span class="church">Revival International Gospel Church</span>
+      </div>
+
+      <div class="service-item">
+        <div class="service-item-header">
+          <h3>Hymn</h3>
+        </div>
+        <a href="#song-my-faith" class="song-link">&#9835; My Faith Looks Up to Thee</a>
+      </div>
+
+      <div class="service-item">
+        <div class="service-item-header">
+          <h3>Closing Prayer &amp; Benediction</h3>
+          <span class="minister">Pastor Kwabena Nimako</span>
+        </div>
+        <span class="church">Revival International Gospel Church</span>
+      </div>
+
+      <div class="service-item">
+        <div class="service-item-header">
+          <h3>Recessional</h3>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== SONGS ===== -->
+<section class="section section-alt" id="songs">
+  <div class="container">
+    <div class="section-header">
+      <h2>Hymns</h2>
+      <div class="ornament"><span></span><span class="ornament-icon">&#9835;</span><span></span></div>
+    </div>
+
+    <!-- It Is Well -->
+    <div class="hymn-card" id="song-it-is-well">
+      <div class="hymn-header" onclick="toggleHymn(this)">
+        <h3>It Is Well with My Soul</h3>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="hymn-body">
+        <div class="verse">
+          <div class="verse-label">Verse 1</div>
+          <p>When peace like a river attendeth my way,</p>
+          <p>When sorrows like sea billows roll;</p>
+          <p>Whatever my lot, Thou hast taught me to say,</p>
+          <p>It is well, it is well with my soul.</p>
+        </div>
+        <div class="verse">
+          <div class="verse-label">Chorus</div>
+          <p><strong>It is well (it is well)</strong></p>
+          <p><strong>With my soul (with my soul)</strong></p>
+          <p><strong>It is well, it is well with my soul.</strong></p>
+        </div>
+        <div class="verse">
+          <div class="verse-label">Verse 2</div>
+          <p>Though Satan should buffet, though trials should come,</p>
+          <p>Let this blest assurance control,</p>
+          <p>That Christ hath regarded my helpless estate,</p>
+          <p>And hath shed His own blood for my soul.</p>
+        </div>
+        <div class="verse">
+          <div class="verse-label">Verse 3</div>
+          <p>My sin&mdash;oh, the bliss of this glorious thought!&mdash;</p>
+          <p>My sin, not in part but the whole,</p>
+          <p>Is nailed to the cross, and I bear it no more,</p>
+          <p>Praise the Lord, praise the Lord, O my soul!</p>
+        </div>
+        <div class="verse">
+          <div class="verse-label">Verse 4</div>
+          <p>And Lord, haste the day when the faith shall be sight,</p>
+          <p>The clouds be rolled back as a scroll;</p>
+          <p>The trump shall resound, and the Lord shall descend,</p>
+          <p>Even so, it is well with my soul.</p>
+        </div>
+      </div>
     </div>
 
     <!-- Amazing Grace -->
-    <div class="hymn-card fade-in" id="hymn-amazing-grace">
-      <h3 class="hymn-title">Amazing Grace</h3>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 1</div>
-        <div class="verse-text">
-          <span class="line">Amazing grace! how sweet the sound,</span>
-          <span class="line">That saved a wretch like me!</span>
-          <span class="line">I once was lost, but now am found,</span>
-          <span class="line">Was blind, but now I see.</span>
-        </div>
+    <div class="hymn-card" id="song-amazing-grace">
+      <div class="hymn-header" onclick="toggleHymn(this)">
+        <h3>Amazing Grace</h3>
+        <span class="toggle-icon">+</span>
       </div>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 2</div>
-        <div class="verse-text">
-          <span class="line">&rsquo;Twas grace that taught my heart to fear,</span>
-          <span class="line">And grace my fears relieved;</span>
-          <span class="line">How precious did that grace appear</span>
-          <span class="line">The hour I first believed!</span>
+      <div class="hymn-body">
+        <div class="verse">
+          <div class="verse-label">Verse 1</div>
+          <p>Amazing grace! How sweet the sound</p>
+          <p>That saved a wretch like me!</p>
+          <p>I once was lost, but now am found;</p>
+          <p>Was blind, but now I see.</p>
         </div>
-      </div>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 3</div>
-        <div class="verse-text">
-          <span class="line">Through many dangers, toils, and snares,</span>
-          <span class="line">I have already come;</span>
-          <span class="line">&rsquo;Tis grace hath brought me safe thus far,</span>
-          <span class="line">And grace will lead me home.</span>
+        <div class="verse">
+          <div class="verse-label">Verse 2</div>
+          <p>'Twas grace that taught my heart to fear,</p>
+          <p>And grace my fears relieved;</p>
+          <p>How precious did that grace appear</p>
+          <p>The hour I first believed!</p>
         </div>
-      </div>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 4</div>
-        <div class="verse-text">
-          <span class="line">The Lord has promised good to me,</span>
-          <span class="line">His word my hope secures;</span>
-          <span class="line">He will my shield and portion be,</span>
-          <span class="line">As long as life endures.</span>
+        <div class="verse">
+          <div class="verse-label">Verse 3</div>
+          <p>Through many dangers, toils, and snares,</p>
+          <p>I have already come;</p>
+          <p>'Tis grace hath brought me safe thus far,</p>
+          <p>And grace will lead me home.</p>
+        </div>
+        <div class="verse">
+          <div class="verse-label">Verse 4</div>
+          <p>The Lord has promised good to me,</p>
+          <p>His Word my hope secures;</p>
+          <p>He will my Shield and Portion be,</p>
+          <p>As long as life endures.</p>
+        </div>
+        <div class="verse">
+          <div class="verse-label">Verse 5</div>
+          <p>When we've been there ten thousand years,</p>
+          <p>Bright shining as the sun,</p>
+          <p>We've no less days to sing God's praise</p>
+          <p>Than when we'd first begun.</p>
         </div>
       </div>
     </div>
 
-    <!-- I Surrender -->
-    <div class="hymn-card fade-in" id="hymn-i-surrender">
-      <h3 class="hymn-title">I Surrender All</h3>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 1</div>
-        <div class="verse-text">
-          <span class="line">All to Jesus, I surrender;</span>
-          <span class="line">All to Him I freely give;</span>
-          <span class="line">I will ever love and trust Him,</span>
-          <span class="line">In His presence daily live.</span>
+    <!-- I Surrender All -->
+    <div class="hymn-card" id="song-i-surrender">
+      <div class="hymn-header" onclick="toggleHymn(this)">
+        <h3>I Surrender All</h3>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="hymn-body">
+        <div class="verse">
+          <div class="verse-label">Verse 1</div>
+          <p>All to Jesus I surrender,</p>
+          <p>All to Him I freely give;</p>
+          <p>I will ever love and trust Him,</p>
+          <p>In His presence daily live.</p>
+        </div>
+        <div class="verse">
+          <div class="verse-label">Chorus</div>
+          <p><strong>I surrender all, I surrender all;</strong></p>
+          <p><strong>All to Thee, my blessed Savior,</strong></p>
+          <p><strong>I surrender all.</strong></p>
+        </div>
+        <div class="verse">
+          <div class="verse-label">Verse 2</div>
+          <p>All to Jesus I surrender,</p>
+          <p>Humbly at His feet I bow;</p>
+          <p>Worldly pleasures all forsaken,</p>
+          <p>Take me, Jesus, take me now.</p>
+        </div>
+        <div class="verse">
+          <div class="verse-label">Verse 3</div>
+          <p>All to Jesus I surrender,</p>
+          <p>Make me, Savior, wholly Thine;</p>
+          <p>Let me feel the Holy Spirit,</p>
+          <p>Truly know that Thou art mine.</p>
+        </div>
+        <div class="verse">
+          <div class="verse-label">Verse 4</div>
+          <p>All to Jesus I surrender,</p>
+          <p>Lord, I give myself to Thee;</p>
+          <p>Fill me with Thy love and power,</p>
+          <p>Let Thy blessing fall on me.</p>
         </div>
       </div>
-      <div class="hymn-verse">
-        <div class="verse-label">Refrain</div>
-        <div class="verse-text">
-          <span class="line">I surrender all, I surrender all,</span>
-          <span class="line">All to Thee, my blessed Savior,</span>
-          <span class="line">I surrender all.</span>
-        </div>
-      </div>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 2</div>
-        <div class="verse-text">
-          <span class="line">All to Jesus I surrender;</span>
-          <span class="line">Humbly at His feet I bow,</span>
-          <span class="line">Worldly pleasures all forsaken;</span>
-          <span class="line">Take me, Jesus, take me now.</span>
-        </div>
-      </div>
-      <div class="chorus-ref">(Refrain)</div>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 3</div>
-        <div class="verse-text">
-          <span class="line">All to Jesus, I surrender;</span>
-          <span class="line">Make me, Savior, wholly Thine;</span>
-          <span class="line">Let me feel the Holy Spirit,</span>
-          <span class="line">Truly know that Thou art mine.</span>
-        </div>
-      </div>
-      <div class="chorus-ref">(Refrain)</div>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 4</div>
-        <div class="verse-text">
-          <span class="line">All to Jesus, I surrender;</span>
-          <span class="line">Lord, I give myself to Thee;</span>
-          <span class="line">Fill me with Thy love and power;</span>
-          <span class="line">Let Thy blessing fall on me.</span>
-        </div>
-      </div>
-      <div class="chorus-ref">(Refrain)</div>
     </div>
 
-    <!-- My Faith Has Found a Resting Place -->
-    <div class="hymn-card fade-in" id="hymn-my-faith">
-      <h3 class="hymn-title">My Faith Has Found a Resting Place</h3>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 1</div>
-        <div class="verse-text">
-          <span class="line">My faith has found a resting place,</span>
-          <span class="line">Not in device nor creed;</span>
-          <span class="line">I trust the Ever-living One,</span>
-          <span class="line">His wounds for me shall plead.</span>
+    <!-- My Faith Looks Up to Thee -->
+    <div class="hymn-card" id="song-my-faith">
+      <div class="hymn-header" onclick="toggleHymn(this)">
+        <h3>My Faith Looks Up to Thee</h3>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="hymn-body">
+        <div class="verse">
+          <div class="verse-label">Verse 1</div>
+          <p>My faith looks up to Thee,</p>
+          <p>Thou Lamb of Calvary,</p>
+          <p>Savior divine!</p>
+          <p>Now hear me while I pray,</p>
+          <p>Take all my guilt away,</p>
+          <p>O let me from this day</p>
+          <p>Be wholly Thine!</p>
+        </div>
+        <div class="verse">
+          <div class="verse-label">Verse 2</div>
+          <p>May Thy rich grace impart</p>
+          <p>Strength to my fainting heart,</p>
+          <p>My zeal inspire;</p>
+          <p>As Thou hast died for me,</p>
+          <p>O may my love to Thee</p>
+          <p>Pure, warm, and changeless be,</p>
+          <p>A living fire!</p>
+        </div>
+        <div class="verse">
+          <div class="verse-label">Verse 3</div>
+          <p>While life's dark maze I tread,</p>
+          <p>And griefs around me spread,</p>
+          <p>Be Thou my guide;</p>
+          <p>Bid darkness turn to day,</p>
+          <p>Wipe sorrow's tears away,</p>
+          <p>Nor let me ever stray</p>
+          <p>From Thee aside.</p>
+        </div>
+        <div class="verse">
+          <div class="verse-label">Verse 4</div>
+          <p>When ends life's transient dream,</p>
+          <p>When death's cold, sullen stream</p>
+          <p>Shall o'er me roll;</p>
+          <p>Blest Savior, then, in love,</p>
+          <p>Fear and distrust remove;</p>
+          <p>O bear me safe above,</p>
+          <p>A ransomed soul!</p>
         </div>
       </div>
-      <div class="hymn-verse">
-        <div class="verse-label">Refrain</div>
-        <div class="verse-text">
-          <span class="line">I need no other argument,</span>
-          <span class="line">I need no other plea,</span>
-          <span class="line">It is enough that Jesus died,</span>
-          <span class="line">And that He died for me.</span>
-        </div>
-      </div>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 2</div>
-        <div class="verse-text">
-          <span class="line">Enough for me that Jesus saves,</span>
-          <span class="line">This ends my fear and doubt;</span>
-          <span class="line">A sinful soul I come to Him,</span>
-          <span class="line">He&rsquo;ll never cast me out.</span>
-        </div>
-      </div>
-      <div class="chorus-ref">(Refrain)</div>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 3</div>
-        <div class="verse-text">
-          <span class="line">My heart is leaning on the Word,</span>
-          <span class="line">The written Word of God,</span>
-          <span class="line">Salvation by my Savior&rsquo;s name,</span>
-          <span class="line">Salvation through His blood.</span>
-        </div>
-      </div>
-      <div class="chorus-ref">(Refrain)</div>
-      <div class="hymn-verse">
-        <div class="verse-label">Verse 4</div>
-        <div class="verse-text">
-          <span class="line">My great Physician heals the sick,</span>
-          <span class="line">The lost He came to save;</span>
-          <span class="line">For me His precious blood He shed,</span>
-          <span class="line">For me His life He gave.</span>
-        </div>
-      </div>
-      <div class="chorus-ref">(Refrain)</div>
     </div>
+
   </div>
 </section>
 
 <!-- ===== SCRIPTURES ===== -->
-<section class="section gold-bg" id="scriptures">
-  <div class="section-inner">
-    <h2 class="section-title">Scripture Readings</h2>
-    <div class="section-divider"></div>
+<section class="section" id="scriptures">
+  <div class="container">
+    <div class="section-header">
+      <h2>Scripture Readings</h2>
+      <div class="ornament"><span></span><span class="ornament-icon">&#10013;</span><span></span></div>
+    </div>
 
-    <div class="version-toggle">
-      <button class="version-btn active" onclick="switchVersion('kjv', this)">KJV</button>
-      <button class="version-btn" onclick="switchVersion('niv', this)">NIV</button>
+    <div class="scripture-toggle-wrap">
+      <div class="scripture-toggle">
+        <button class="active" onclick="switchVersion('kjv', this)">KJV</button>
+        <button onclick="switchVersion('niv', this)">NIV</button>
+      </div>
     </div>
 
     <!-- Psalm 23 -->
-    <div class="scripture-card fade-in" id="scripture-psalm23">
-      <h3 class="scripture-ref">Psalm 23</h3>
-      <div class="scripture-version kjv active">
-        <div class="scripture-text">
-          <span class="verse-num">1</span>The Lord is my shepherd; I shall not want.
-          <span class="verse-num">2</span>He maketh me to lie down in green pastures: he leadeth me beside the still waters.
-          <span class="verse-num">3</span>He restoreth my soul: he leadeth me in the paths of righteousness for his name&rsquo;s sake.
-          <span class="verse-num">4</span>Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me.
-          <span class="verse-num">5</span>Thou preparest a table before me in the presence of mine enemies: thou anointest my head with oil; my cup runneth over.
-          <span class="verse-num">6</span>Surely goodness and mercy shall follow me all the days of my life: and I will dwell in the house of the Lord for ever.
-        </div>
+    <div class="scripture-card">
+      <h3>Psalm 23</h3>
+      <div class="verse-text kjv-text">
+        <p><span class="verse-num">1</span>The Lord is my shepherd; I shall not want. <span class="verse-num">2</span>He maketh me to lie down in green pastures: he leadeth me beside the still waters. <span class="verse-num">3</span>He restoreth my soul: he leadeth me in the paths of righteousness for his name's sake. <span class="verse-num">4</span>Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me. <span class="verse-num">5</span>Thou preparest a table before me in the presence of mine enemies: thou anointest my head with oil; my cup runneth over. <span class="verse-num">6</span>Surely goodness and mercy shall follow me all the days of my life: and I will dwell in the house of the Lord for ever.</p>
       </div>
-      <div class="scripture-version niv">
-        <div class="scripture-text">
-          <span class="verse-num">1</span>The Lord is my shepherd, I lack nothing.
-          <span class="verse-num">2</span>He makes me lie down in green pastures, he leads me beside quiet waters,
-          <span class="verse-num">3</span>he refreshes my soul. He guides me along the right paths for his name&rsquo;s sake.
-          <span class="verse-num">4</span>Even though I walk through the darkest valley, I will fear no evil, for you are with me; your rod and your staff, they comfort me.
-          <span class="verse-num">5</span>You prepare a table before me in the presence of my enemies. You anoint my head with oil; my cup overflows.
-          <span class="verse-num">6</span>Surely your goodness and love will follow me all the days of my life, and I will dwell in the house of the Lord forever.
-        </div>
+      <div class="verse-text niv-text" style="display:none;">
+        <p><span class="verse-num">1</span>The Lord is my shepherd, I lack nothing. <span class="verse-num">2</span>He makes me lie down in green pastures, he leads me beside quiet waters, <span class="verse-num">3</span>he refreshes my soul. He guides me along the right paths for his name's sake. <span class="verse-num">4</span>Even though I walk through the darkest valley, I will fear no evil, for you are with me; your rod and your staff, they comfort me. <span class="verse-num">5</span>You prepare a table before me in the presence of my enemies. You anoint my head with oil; my cup overflows. <span class="verse-num">6</span>Surely your goodness and love will follow me all the days of my life, and I will dwell in the house of the Lord forever.</p>
       </div>
     </div>
 
     <!-- John 14:1-4 -->
-    <div class="scripture-card fade-in" id="scripture-john14">
-      <h3 class="scripture-ref">John 14:1&ndash;4</h3>
-      <div class="scripture-version kjv active">
-        <div class="scripture-text">
-          <span class="verse-num">1</span>Let not your heart be troubled: ye believe in God, believe also in me.
-          <span class="verse-num">2</span>In my Father&rsquo;s house are many mansions: if it were not so, I would have told you. I go to prepare a place for you.
-          <span class="verse-num">3</span>And if I go and prepare a place for you, I will come again, and receive you unto myself; that where I am, there ye may be also.
-          <span class="verse-num">4</span>And whither I go ye know, and the way ye know.
-        </div>
+    <div class="scripture-card">
+      <h3>John 14:1-4</h3>
+      <div class="verse-text kjv-text">
+        <p><span class="verse-num">1</span>Let not your heart be troubled: ye believe in God, believe also in me. <span class="verse-num">2</span>In my Father's house are many mansions: if it were not so, I would have told you. I go to prepare a place for you. <span class="verse-num">3</span>And if I go and prepare a place for you, I will come again, and receive you unto myself; that where I am, there ye may be also. <span class="verse-num">4</span>And whither I go ye know, and the way ye know.</p>
       </div>
-      <div class="scripture-version niv">
-        <div class="scripture-text">
-          <span class="verse-num">1</span>&ldquo;Do not let your hearts be troubled. You believe in God; believe also in me.
-          <span class="verse-num">2</span>My Father&rsquo;s house has many rooms; if that were not so, would I have told you that I am going there to prepare a place for you?
-          <span class="verse-num">3</span>And if I go and prepare a place for you, I will come back and take you to be with me that you also may be where I am.
-          <span class="verse-num">4</span>You know the way to the place where I am going.&rdquo;
-        </div>
+      <div class="verse-text niv-text" style="display:none;">
+        <p><span class="verse-num">1</span>"Do not let your hearts be troubled. You believe in God; believe also in me. <span class="verse-num">2</span>My Father's house has many rooms; if that were not so, would I have told you that I am going there to prepare a place for you? <span class="verse-num">3</span>And if I go and prepare a place for you, I will come back and take you to be with me that you also may be where I am. <span class="verse-num">4</span>You know the way to the place where I am going."</p>
       </div>
     </div>
 
     <!-- 2 Timothy 4:6-7 -->
-    <div class="scripture-card fade-in" id="scripture-2tim4">
-      <h3 class="scripture-ref">2 Timothy 4:6&ndash;7</h3>
-      <div class="scripture-version kjv active">
-        <div class="scripture-text">
-          <span class="verse-num">6</span>For I am now ready to be offered, and the time of my departure is at hand.
-          <span class="verse-num">7</span>I have fought a good fight, I have finished my course, I have kept the faith.
-        </div>
+    <div class="scripture-card">
+      <h3>2 Timothy 4:6-7</h3>
+      <div class="verse-text kjv-text">
+        <p><span class="verse-num">6</span>For I am now ready to be offered, and the time of my departure is at hand. <span class="verse-num">7</span>I have fought a good fight, I have finished my course, I have kept the faith.</p>
       </div>
-      <div class="scripture-version niv">
-        <div class="scripture-text">
-          <span class="verse-num">6</span>For I am already being poured out like a drink offering, and the time for my departure is near.
-          <span class="verse-num">7</span>I have fought the good fight, I have finished the race, I have kept the faith.
-        </div>
+      <div class="verse-text niv-text" style="display:none;">
+        <p><span class="verse-num">6</span>For I am already being poured out like a drink offering, and the time for my departure is near. <span class="verse-num">7</span>I have fought the good fight, I have finished the race, I have kept the faith.</p>
       </div>
     </div>
+
   </div>
 </section>
 
 <!-- ===== TRIBUTES ===== -->
-<section class="section" id="tributes">
-  <div class="section-inner">
-    <h2 class="section-title">Tributes</h2>
-    <p class="section-subtitle">Click to read each tribute</p>
-    <div class="section-divider"></div>
+<section class="section section-alt" id="tributes">
+  <div class="container">
+    <div class="section-header">
+      <h2>Tributes</h2>
+      <div class="ornament"><span></span><span class="ornament-icon">&#10084;</span><span></span></div>
+    </div>
+
+    <!-- COLLECTIVE TRIBUTES -->
+    <h3 class="tribute-group-title">&#10013; Collective Tributes</h3>
 
     <!-- Family Tribute -->
-    <div class="tribute-card fade-in">
+    <div class="tribute-card">
       <div class="tribute-header" onclick="toggleTribute(this)">
-        <div class="tribute-header-left">
-          <span class="tribute-author-label">Family Tribute</span>
-          <span class="tribute-author-name">Isaac Koranteng</span>
+        <div class="tribute-header-info">
+          <h3>Family Tribute</h3>
+          <span class="tribute-relation">Read by Isaac Koranteng</span>
         </div>
-        <div class="tribute-toggle"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+        <span class="toggle-icon">+</span>
       </div>
       <div class="tribute-body">
-        <div class="tribute-body-inner">
-          <p>With deep sorrow yet thankful hearts, we -- the family of our beloved Cecilia Gyan from Bremen Asekuma -- honor the life of a remarkable woman whose love and presence shaped our family in countless ways.</p>
-          <p>Cecilia Gyan was a woman of extraordinary warmth. She was very welcoming, opening her home and heart not only to her children but also to others in need. She lovingly took in and cared for her siblings, the late Steven Ahenkora and Vivian Gyan (Akua Akoto), showing a rare and selfless generosity that defined her life.</p>
-          <p>In our family, she was our pillar and our first point of call. Whether there was sickness, a celebration, or a time of need, she was always the one we turned to. From the joyous moments of marriages to the difficult seasons of life, Cecilia was present -- offering support, wisdom, and comfort without hesitation.</p>
-          <p>She had a unique gift of connection. She did not only relate to her immediate family but extended her love to every branch of the family tree. She brought people together, nurtured relationships, and made everyone feel seen, valued, and loved. Her home was not just a place -- it was a refuge of peace, unity, and care.</p>
-          <p>Though our hearts are heavy with her loss, we take comfort in the beautiful legacy she leaves behind -- a legacy of love, sacrifice, unity, and strength. Truly, as it is written in 2 Timothy 4:7, &ldquo;I have fought a good fight, I have finished my course, I have kept the faith.&rdquo;</p>
+        <p>With deep sorrow yet thankful hearts, we&mdash;the family of our beloved Cecilia Gyan from Bremen Asekuma&mdash;honor the life of a remarkable woman whose love and presence shaped our family in countless ways.</p>
+        <p>Cecilia Gyan was a woman of extraordinary warmth. She was very welcoming, opening her home and heart not only to her children but also to others in need. She lovingly took in and cared for her siblings, the late Steven Ahenkora and Vivian Gyan (Akua Akoto), showing a rare and selfless generosity that defined her life.</p>
+        <p>In our family, she was our pillar and our first point of call. Whether there was sickness, a celebration, or a time of need, she was always the one we turned to. From the joyous moments of marriages to the difficult seasons of life, Cecilia was present&mdash;offering support, wisdom, and comfort without hesitation.</p>
+        <div class="tribute-extra" id="family-tribute-extra">
+          <p>She had a unique gift of connection. She did not only relate to her immediate family but extended her love to every branch of the family tree. She brought people together, nurtured relationships, and made everyone feel seen, valued, and loved. Her home was not just a place&mdash;it was a refuge of peace, unity, and care.</p>
+          <p>Though our hearts are heavy with her loss, we take comfort in the beautiful legacy she leaves behind&mdash;a legacy of love, sacrifice, unity, and strength.</p>
+          <blockquote>"I have fought a good fight, I have finished my course, I have kept the faith." &mdash; 2 Timothy 4:7</blockquote>
           <p>We will forever remember her kindness, her openness, and the way she held this family together. Her impact will continue to live on in all of us.</p>
-          <p>Rest well, our beloved Cecilia Gyan. You will always remain in our hearts.</p>
-          <p>Da yie.</p>
-          <p class="tribute-signed"><em>Signed,<br>The Family of Bremen Asekuma and Assin Eyinabriam.</em></p>
+          <p>Rest well, our beloved Cecilia Gyan. You will always remain in our hearts. Da yie.</p>
+          <p><em>&mdash; Signed, The Family of Bremen Asekuma and Assin Eyinabriam</em></p>
         </div>
+        <button class="read-more-btn" onclick="toggleReadMore(this, 'family-tribute-extra')">Read more</button>
       </div>
     </div>
 
-    <!-- Children's Tribute - Josephine -->
-    <div class="tribute-card fade-in">
+    <!-- Children's Tribute -->
+    <div class="tribute-card">
       <div class="tribute-header" onclick="toggleTribute(this)">
-        <div class="tribute-header-left">
-          <span class="tribute-author-label">Children&rsquo;s Tribute</span>
-          <span class="tribute-author-name">Josephine Putu-Nyamikeh</span>
+        <div class="tribute-header-info">
+          <h3>Children's Tribute</h3>
+          <span class="tribute-relation">From the Children</span>
         </div>
-        <div class="tribute-toggle"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+        <span class="toggle-icon">+</span>
       </div>
       <div class="tribute-body">
-        <div class="tribute-body-inner">
-          <p>Hmm... where do I even begin?<br>Writing this tribute has been one of the hardest things I have ever had to do. Every word carries pain, love, and memories that I wish I could hold onto forever.</p>
-          <p>My mother was not just a mother to me... she was my life, my strength, my best friend.<br>She once told me a story that I will never forget. When I was born, I had a severe skin disease. The pain was so much that people around her told her to let me go... to give up... to allow me to die. But my mother refused.<br>She stood strong.<br>She fought for me.<br>She carried me, tied me to her body, and made sure I survived.</p>
-          <p>That alone tells you the kind of woman she was.</p>
-          <p>A fighter.<br>A mother of strength.<br>A woman of unconditional love.</p>
-          <p>Growing up, my mother was my safe place. She spoke to me about deep things in life. She guided me, advised me, and stood by me especially during times when work and life overwhelmed me.<br>She saw my struggles before I spoke them.<br>She comforted me before I broke down.</p>
-          <p>She went through her own pain heartache, rejection, and disappointment but never allowed any of it to stop her from loving her children.<br>Today, I want my siblings to know this:</p>
-          <p>Mom loved each and every one of us equally.<br>Her love was pure. Her love was intentional. Her love was unconditional.</p>
-          <p>Her smile alone could change my entire day.</p>
-          <p>Every morning, as I got ready for work, I would stand in front of her and ask,<br>&ldquo;Mirror, mirror... how do I look?&rdquo;</p>
-          <p>And she would respond,<br>&ldquo;Beautiful with her two thumbs up and a smile.&rdquo;</p>
-          <p>That was all I needed to step into my day with confidence.</p>
-          <p>As a child, I always longed to have my mother close to me. I prayed about it constantly. There was a song that stayed in my heart:<br>&ldquo;God, because of what I have told You, I am here... my Savior, say something to me...&rdquo;<br>(Asem bi a me ka kyere wo ooo...)<br>And one day, God answered my prayers.<br>He brought my mother closer to me.<br>And I will forever be grateful for that.</p>
-          <p>The time I spent with her... I will cherish for the rest of my life.</p>
-          <p>I also want to take this opportunity to thank my husband.</p>
-          <p>For accepting my mother...<br>For loving her...<br>For embracing her fully throughout the time she lived with us.<br>Papa, for years, you woke up early every morning whether it was cold or hot to make sure mom was ready and taken to her driver for her treatments.<br>Hmmmm... what a husband. You never complained. You showed up every single day with love and commitment. And mom was deeply grateful.</p>
-          <p>Papa, she told me to tell you that she appreciated you... and everything you did for her.<br>God bless you.</p>
-          <p>Even though I may not fully understand or agree with God&rsquo;s decision to take her now, I know that there is a time for everything... and her time has come.<br>These past days have not been easy. I have had sleepless nights.<br>I have cried... especially at midnight because that was the time I would quietly walk into her room, check on her, and make sure she was ready for the next day.</p>
-          <p>Just a week before she passed, she kept saying something to me over and over again:<br>&ldquo;May God bless you and your husband... I love you very much.&rdquo;<br>Those words... I will carry with me forever.</p>
-          <p>My heart also breaks for my children.</p>
-          <p>I kept asking myself how will they survive this loss?</p>
-          <p>But in their innocence, they comfort me.</p>
-          <p>They tell me,<br>&ldquo;Mom, stop crying. Grandma is in a beautiful place, like a hotel with plenty of money... and if you cry, she won&rsquo;t bring you anything!&rdquo;<br>And somehow... even in my pain... that makes me smile.</p>
-          <p>My mother and I shared so many things even food. She ate what I ate. Now, even eating has become difficult, because everything reminds me of her.<br>Hmm...</p>
-          <p>I feel broken.<br>I feel confused.<br>I feel the emptiness.</p>
-          <p>But in all of this, one thing remains my prayer:<br>That my mother rests well.<br>And that the peace of God, which surpasses all understanding, will comfort us and carry us through.<br>There are moments like now when I need her the most.<br>And it hurts deeply that she is not here.</p>
-          <p>But even in my pain...</p>
-          <p>I say,</p>
-          <p>It is well with my soul.</p>
-          <p>Thank you</p>
+        <p>Today, our hearts are heavy, yet full of gratitude as we stand to honor and remember our beloved mother, Cecilia.</p>
+        <p>Mama Cecilia was more than a mother to us. She was our comfort, our teacher, our prayer warrior, and our safe place. She loved us deeply and sacrificed so much for us. Her love was not just spoken in words, but shown every day through her care, her advice, her correction, and her constant prayers over our lives.</p>
+        <p>She was always there for us in times of joy and in times of pain. When life was hard, she encouraged us. When we were weak, she prayed for us. When we needed guidance, she spoke to us with wisdom and love. She carried us in her heart every single day.</p>
+        <div class="tribute-extra" id="children-tribute-extra">
+          <p>Our mother loved her children and grandchildren with everything she had. She wanted the best for all of us. She taught us to respect God, to stay humble, to care for one another, and to keep going no matter what life brings.</p>
+          <p>Though our hearts are broken because we will miss her voice, her presence, her prayers, and her love, we are thankful to God for the gift of having her as our mother. Her memory will live on in us, in the values she taught us, and in the love she gave so freely.</p>
+          <p>Mama, thank you for loving us. Thank you for praying for us. Thank you for sacrificing for us. Thank you for being the strong foundation of our family.</p>
+          <p>We will miss you deeply, but we will carry your love in our hearts forever.</p>
+          <p>Rest well, Mama Cecilia. You fought your battles, you finished your race, and you have gone to be with the Lord.</p>
+          <blockquote>"Her children arise up, and call her blessed..." &mdash; Proverbs 31:28</blockquote>
         </div>
+        <button class="read-more-btn" onclick="toggleReadMore(this, 'children-tribute-extra')">Read more</button>
       </div>
     </div>
 
-    <!-- Sons-in-Law Tribute - Rev. Dubois Nyamikeh -->
-    <div class="tribute-card fade-in">
+    <!-- Sons-in-Law Tribute -->
+    <div class="tribute-card">
       <div class="tribute-header" onclick="toggleTribute(this)">
-        <div class="tribute-header-left">
-          <span class="tribute-author-label">Tribute from Son-in-Law</span>
-          <span class="tribute-author-name">Rev. Dubois Nyamikeh</span>
+        <div class="tribute-header-info">
+          <h3>Tribute from the Sons-in-Law</h3>
+          <span class="tribute-relation">From the Sons-in-Law</span>
         </div>
-        <div class="tribute-toggle"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+        <span class="toggle-icon">+</span>
       </div>
       <div class="tribute-body">
-        <div class="tribute-body-inner">
-          <p>Today, I stand here with a heart that is both heavy and grateful. Heavy because I have lost my mother-in-law... and grateful because I was blessed to have her in my life.</p>
-          <p>My mother-in-law was not just my mother. She was a blessing to my home and my family.</p>
-          <p>She lived with us and became the heart of our household. In the quiet moments, in the busy moments, and even when we were not around, she was always there, taking care of everything and holding our home together.</p>
-          <p>She loved my children deeply. She guided them, corrected them with love, and prayed for them. Her presence in their lives was truly a gift.</p>
-          <p>My mother-in-law was full of wisdom. She advised me, encouraged me, and always spoke truth into my life. She loved God deeply, and her faith showed in everything she did. She was truly a pillar in the church.</p>
-          <p>She also had her joyful side. She loved talking about life and politics, especially her passion for Kennedy Agyapong. Those moments of laughter and conversation will always stay with me.</p>
-          <p>Maa, thank you...</p>
-          <p>Thank you for your love.<br>Thank you for your care.<br>Thank you for your prayers.</p>
-          <p>Your place in my life, in my home, and in my heart can never be replaced.</p>
-          <p>I will miss you deeply... but I will carry you with me always.</p>
-          <p>Rest well, Maa.<br>You have fought a good fight.<br>You have finished your race.</p>
-          <p>I love you. Always.</p>
-          <p class="tribute-closing">&ldquo;I have fought a good fight, I have finished my course, I have kept the faith.&rdquo; &mdash; 2 Timothy 4:7 (KJV)</p>
+        <p>Today, we stand before you with hearts that are deeply broken, yet filled with gratitude. Broken because we have lost a mother... and grateful because we were blessed to have her as our own.</p>
+        <p>She may have come into our lives as a mother-in-law... but she never treated us that way. She welcomed us with open arms, embraced us with love, called us her sons... and truly, she became our mother.</p>
+        <p>Mama was always there for us. In the moments we didn't know what to do... she advised us. In the moments we felt weak... she encouraged us. In the moments we were overwhelmed... she prayed for us. And those prayers carried us more than we can ever explain.</p>
+        <div class="tribute-extra" id="sonsinlaw-tribute-extra">
+          <p>She loved our children with everything she had. Not just as a grandmother, but as a mother who poured her heart into them. She corrected them with love, guided them with wisdom, and covered them in prayer. Because of her, our children have known love in its purest form.</p>
+          <p>Mama was the kind of woman you could depend on. When we were not around, she held everything together. She cared for our homes as if they were her own. She gave us peace... because we knew she was there.</p>
+          <p>She was full of wisdom. She spoke into our lives. She guided us with love. And every word she spoke carried weight.</p>
+          <p>Mama was also a woman of God. Her faith was not just something she spoke about... it was something she lived every single day. She stood strong in the church, supported the work of God, and remained steadfast. She was truly a pillar.</p>
+          <p>Today, words are not enough to express what we feel. We have lost a covering, a voice of wisdom, and a source of strength. But even in this pain, we hold on to love. Because Mama loved deeply, openly, and without limits. And that love will never leave us.</p>
+          <p>Mama, we say thank you. Thank you for loving us as your sons. Thank you for standing by us. Thank you for your prayers. Your place in our lives, our homes, and our hearts can never be replaced.</p>
+          <p>We will miss you more than words can say... but we will carry you with us every day, in everything we do.</p>
+          <p>Rest well, Mama. You have fought a good fight. You have finished your race. We love you. Always.</p>
+          <blockquote>"I have fought a good fight, I have finished my course, I have kept the faith." &mdash; 2 Timothy 4:7 (KJV)</blockquote>
         </div>
+        <button class="read-more-btn" onclick="toggleReadMore(this, 'sonsinlaw-tribute-extra')">Read more</button>
       </div>
     </div>
 
-    <!-- Son-in-Law Kwabena Bosompem -->
-    <div class="tribute-card fade-in">
+    <!-- Church Tribute -->
+    <div class="tribute-card">
       <div class="tribute-header" onclick="toggleTribute(this)">
-        <div class="tribute-header-left">
-          <span class="tribute-author-label">Tribute from Son-in-Law</span>
-          <span class="tribute-author-name">Kwabena Bosompem</span>
+        <div class="tribute-header-info">
+          <h3>Revival International Gospel Church</h3>
+          <span class="tribute-relation">Church Tribute</span>
         </div>
-        <div class="tribute-toggle"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+        <span class="toggle-icon">+</span>
       </div>
       <div class="tribute-body">
-        <div class="tribute-body-inner">
-          <p>Not long ago, we were at a prayer retreat. It was late, close to 10pm. As always, she called Hannah before bed to check on her. Even in the middle of her own life, she made time for her children.</p>
-          <p>Hannah told her we were about to leave and that the next session was starting. I stood in the corner putting on my shoes, pretending not to listen. Then I heard her say, &ldquo;I love you,&rdquo; before they hung up.</p>
-          <p>Without thinking, I shouted, &ldquo;I love you too!&rdquo;</p>
-          <p>Hannah handed me the phone. We video chatted for a few minutes. We blew each other kisses. We laughed. It was simple. It was warm. It was love.</p>
-          <p>Less than 48 hours later, she was gone.</p>
-          <p>Cecilia Gyan was a loving mother in law. We would tease Hannah every chance we got, and she would laugh with us. I used to say I was jealous of the love she had for her children and grandchildren. She loved deeply. She loved openly. She loved without limits.</p>
-          <p>She was warm. She was sweet. She was fun. She was wise. She was patient. She was loving. I could go on.</p>
-          <p>She lived a rich and beautiful life. She survived the horrors of the Liberian civil war. She saw hardship and kept her faith. She spent the last decade of her life close to her youngest grandchildren. She was surrounded by children and grandchildren too many to count. Her life was full.</p>
-          <p>As a church, one of our prayers is that we cross 80 with ease. Mama Cecilia, also known as Sweet 16, did just that. She crossed 80 with grace. She ran her race. She finished strong.</p>
-          <p>I imagine her in heaven wishing she could video call us one more time to show us the glory she now sees.</p>
-          <p>Mama, thank you for loving us the way you did. Thank you for raising a daughter who reflects your strength and your heart. Thank you for welcoming me as your own.</p>
-          <p>Until we meet again, I will strive to be better. I will love deeper. I will call more often. And I will never forget the sound of you saying, &ldquo;I love you,&rdquo; before hanging up.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Grandchildren - Bethany -->
-    <div class="tribute-card fade-in">
-      <div class="tribute-header" onclick="toggleTribute(this)">
-        <div class="tribute-header-left">
-          <span class="tribute-author-label">Grandchildren&rsquo;s Tribute</span>
-          <span class="tribute-author-name">Bethany Nyamikeh</span>
-        </div>
-        <div class="tribute-toggle"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
-      </div>
-      <div class="tribute-body">
-        <div class="tribute-body-inner">
-          <p>I am Bethany Nyamikeh, one of my grandmother&rsquo;s granddaughters. As you all know, my grandmother, Cecelia Gyan, has gone to be with the Lord. As much as this pains my soul, I am here today to share the memories she left with me and with all of our family. My grandma was a very strong woman. When she first came to America and stepped into my life and my siblings&rsquo; lives, everything changed. I remember the first time I met her.</p>
-          <p>She was very tall, with kind eyes. Her dark skin had a beautiful shine that glimmered in the sun, and she was dressed like she was going to meet the president. Her face was both soft and strong. She was the prettiest old lady I had ever seen she didn&rsquo;t even look her age.</p>
-          <p>My grandma was my best friend, someone I could laugh with all the time even after a fight. And I must admit, we did clash a lot. But with those fights came a love so real that it washed all the anger away.<br>She was also my mentor. She taught me how to wash dishes properly, what hand to use when serving or giving something to someone older than me, and she taught me patience, kindness, and how to be a better older sister.</p>
-          <p>I remember when I was 10 years old, we would watch Jesus of Nazareth together every Easter, and every time, we would both end up in tears. When it got to the part where Jesus says,</p>
-          <p>&ldquo;Honor thy father and thy mother,&rdquo;<br>she would say in Twi, &ldquo;stop arguing with me,&rdquo; and we would laugh. &ldquo;Listen to Jesus&rdquo; and I remember walking past her room at 9 p.m., and she would whisper, &ldquo;Bethany, bra bra bra, get me tea and bread.&rdquo;<br>I would tell her she shouldn&rsquo;t eat that late because of dialysis, but she would respond in Twi, &ldquo;I&rsquo;ll eat whatever I want,&rdquo; and I would laugh and bring it to her anyway.</p>
-          <p>My grandma had such a beautiful smile. She would tell me stories about her life back in Ghana. Even as she grew weaker over the years, her love for God and for our family never weakened.</p>
-          <p>A few days before my sixteenth birthday, I asked her what verse I should use to spread the gospel. She told me her favorite: Psalm 122:1<br>&ldquo;I was glad when they said unto me, Let us go into the house of the Lord.&rdquo;<br>And now, she truly is in the house of the Lord.</p>
-          <p>My grandma was an amazing woman. Even in my sorrow, I can smile, because with death comes new beginnings. Her presence in my life taught me rely on Jesus in my toughest times. I will never forget her last words to me: &ldquo;Take care of your sisters and your mom. I love you.&rdquo;</p>
-          <p>So with that, I say: Thank you, Grandma, for brightening my life and keeping me in check. Thank you for teaching me what a follower of Christ looks like and for strengthening my faith. Thank you for the stories, for the laughter, for the sweet times and the hard times.</p>
-          <p>And thank you, Lord, for bringing my grandma into my life. Without her, I would not be who I am today.</p>
-          <p>Fly high, sweet 16</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- RIGC Tribute -->
-    <div class="tribute-card fade-in">
-      <div class="tribute-header" onclick="toggleTribute(this)">
-        <div class="tribute-header-left">
-          <span class="tribute-author-label">Church Tribute</span>
-          <span class="tribute-author-name">Revival International Gospel Church</span>
-        </div>
-        <div class="tribute-toggle"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
-      </div>
-      <div class="tribute-body">
-        <div class="tribute-body-inner">
-          <p style="text-align:center;font-style:italic;color:var(--text-light);margin-bottom:20px;">In honor of Mama Cecilia Gyan</p>
-          <p>Today, Revival International Gospel Church stands together with hearts that are heavy, yet full of gratitude. Heavy because we have lost a mother, a pillar, a woman of God, and grateful because we were blessed to have experienced her life among us.</p>
-          <p>Mama Cecilia Gyan was not just a member of this church. She was part of the foundation of what God is building here. She was a woman whose life spoke louder than words.</p>
-          <p>Her faith was not just something she talked about; her faith was something she lived. She showed us what it means to trust God in all seasons, to stand strong even through life&rsquo;s battles, and to serve God with humility and consistency.</p>
+        <p>Today, Revival International Gospel Church stands together with hearts that are heavy, yet full of gratitude. Heavy because we have lost a mother, a pillar, a woman of God, and grateful because we were blessed to have experienced her life among us.</p>
+        <p>Mama Cecilia Gyan was not just a member of this church. She was part of the foundation of what God is building here. She was a woman whose life spoke louder than words. Her faith was not just something she talked about; her faith was something she lived.</p>
+        <p>She showed us what it means to trust God in all seasons, to stand strong even through life's battles, and to serve God with humility and consistency.</p>
+        <div class="tribute-extra" id="church-tribute-extra">
           <p>Mama was a prayerful woman, a loving woman, and a woman of wisdom and strength. She carried herself with grace, spoke with purpose, and loved with sincerity. In this church, she was not just seen, she was felt. Her presence brought warmth. Her words brought encouragement. Her life brought inspiration.</p>
           <p>Even in her later years, her love for God never faded. Her commitment never weakened. Her voice of wisdom never stopped guiding those around her. She was truly a mother to many.</p>
           <p>Today, we do not stand here as people without hope. We know that Mama Cecilia Gyan fought a good fight, finished her race, and kept the faith. And now, she rests in the presence of the Lord she loved so deeply.</p>
-          <p>Church, this is not just a moment of sorrow. It is a moment of reflection. A reminder that life is short, that faith must be lived, and that legacy is not in what we say, but in how we live.</p>
-          <p>Mama has left us a legacy: a legacy of faith, a legacy of love, and a legacy of service. It is now our responsibility to carry it forward.</p>
-          <p>Mama, we say thank you. Thank you for your prayers, your love, your example. Your seat may be empty, but your impact will never be erased. Revival International Gospel Church will miss you deeply. But heaven has gained a general. Rest well, Mama. Until we meet again.</p>
-          <p class="tribute-closing">&ldquo;Precious in the sight of the Lord is the death of his saints.&rdquo; &mdash; Psalm 116:15 (KJV)</p>
+          <p>Church, this is not just a moment of sorrow. It is a moment of reflection. A reminder that life is short, that faith must be lived, and that legacy is not in what we say, but in how we live. Mama has left us a legacy: a legacy of faith, a legacy of love, and a legacy of service. It is now our responsibility to carry it forward.</p>
+          <p>Mama, we say thank you. Thank you for your prayers, your love, your example. Your seat may be empty, but your impact will never be erased. Revival International Gospel Church will miss you deeply. But heaven has gained a general.</p>
+          <p>Rest well, Mama. Until we meet again.</p>
+          <blockquote>"Precious in the sight of the Lord is the death of his saints." &mdash; Psalm 116:15 (KJV)</blockquote>
         </div>
+        <button class="read-more-btn" onclick="toggleReadMore(this, 'church-tribute-extra')">Read more</button>
+      </div>
+    </div>
+
+    <!-- INDIVIDUAL TRIBUTES - CHILDREN -->
+    <h3 class="tribute-group-title">&#10084; From the Children</h3>
+
+    <!-- Josephine Putu -->
+    <div class="tribute-card">
+      <div class="tribute-header" onclick="toggleTribute(this)">
+        <img src="images/headshots/josephine.jpg" alt="Josephine Putu" class="tribute-headshot">
+        <div class="tribute-header-info">
+          <h3>Josephine Putu</h3>
+          <span class="tribute-relation">Daughter</span>
+        </div>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="tribute-body">
+        <p>Hmm... where do I even begin? Writing this tribute has been one of the hardest things I have ever had to do. Every word carries pain, love, and memories that I wish I could hold onto forever.</p>
+        <p>My mother was not just a mother to me... she was my life, my strength, my best friend.</p>
+        <p>She once told me a story that I will never forget. When I was born, I had a severe skin disease. The pain was so much that people around her told her to let me go... to give up... to allow me to die. But my mother refused. She stood strong. She fought for me. She carried me, tied me to her body, and made sure I survived.</p>
+        <p>That alone tells you the kind of woman she was. A fighter. A mother of strength. A woman of unconditional love.</p>
+      </div>
+    </div>
+
+    <!-- Nana Yaa -->
+    <div class="tribute-card">
+      <div class="tribute-header" onclick="toggleTribute(this)">
+        <img src="images/headshots/nana_yaa.jpg" alt="Nana Yaa" class="tribute-headshot">
+        <div class="tribute-header-info">
+          <h3>Nana Yaa</h3>
+          <span class="tribute-relation">Daughter</span>
+        </div>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="tribute-body">
+        <p>Mom, my heart aches deeply. I miss your phone calls&mdash;the simple moments when I would hear your voice and feel your love. Now the silence reminds me that you are no longer here.</p>
+        <p>I feel a loneliness I cannot explain, because the one who was always there for me is gone.</p>
+        <p>But I hold on to the love you gave me, a love that will stay in my heart forever.</p>
+        <p>Rest well, my dear mother. I will never forget you.</p>
+      </div>
+    </div>
+
+    <!-- Dorothy Putu -->
+    <div class="tribute-card">
+      <div class="tribute-header" onclick="toggleTribute(this)">
+        <img src="images/headshots/dorothy.jpeg" alt="Dorothy Putu" class="tribute-headshot">
+        <div class="tribute-header-info">
+          <h3>Dorothy Putu</h3>
+          <span class="tribute-relation">Daughter</span>
+        </div>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="tribute-body">
+        <p>My beloved sweet mom passed away on the 9/2/26. Mom was the heart and soul of our family. When Daddy died, she stood in as a father as well.</p>
+        <p>Mom's constant source of love, strength, wisdom and encouragement was massive. I can still feel her warmth, love and her infectious laughter and energy even now.</p>
+      </div>
+    </div>
+
+    <!-- Hannah Bosompem -->
+    <div class="tribute-card">
+      <div class="tribute-header" onclick="toggleTribute(this)">
+        <img src="images/headshots/hannah.jpeg" alt="Hannah Bosompem" class="tribute-headshot">
+        <div class="tribute-header-info">
+          <h3>Hannah Bosompem</h3>
+          <span class="tribute-relation">Daughter</span>
+        </div>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="tribute-body">
+        <p>Today, I honor a woman whose life was a living sermon&mdash;my beloved mother, Cecilia Gyan, affectionately known to all of us as "Sweet Sixteen."</p>
+        <p>Ma was a woman of prayer. Before she spoke to anyone, she spoke to God. In every season&mdash;whether joy or sorrow, certainty or uncertainty&mdash;she knelt first.</p>
+      </div>
+    </div>
+
+    <!-- INDIVIDUAL TRIBUTES - SONS-IN-LAW -->
+    <h3 class="tribute-group-title">&#10084; From the Sons-in-Law</h3>
+
+    <!-- Rev. Dubois Nyamikeh -->
+    <div class="tribute-card">
+      <div class="tribute-header" onclick="toggleTribute(this)">
+        <img src="images/headshots/dubois.jpg" alt="Rev. Dubois Nyamikeh" class="tribute-headshot">
+        <div class="tribute-header-info">
+          <h3>Rev. Dubois Nyamikeh</h3>
+          <span class="tribute-relation">Son-in-Law</span>
+        </div>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="tribute-body">
+        <p>Today, I stand here with a heart that is both heavy and grateful. Heavy because I have lost my mother-in-law... and grateful because I was blessed to have her in my life.</p>
+        <p>My mother-in-law was not just my wife's mother. She became my mother too.</p>
+      </div>
+    </div>
+
+    <!-- Kwabena Bosompem -->
+    <div class="tribute-card">
+      <div class="tribute-header" onclick="toggleTribute(this)">
+        <img src="images/headshots/kwabena_b.jpg" alt="Kwabena Bosompem" class="tribute-headshot">
+        <div class="tribute-header-info">
+          <h3>Kwabena Bosompem</h3>
+          <span class="tribute-relation">Son-in-Law</span>
+        </div>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="tribute-body">
+        <p>Not long ago, we were at a prayer retreat. It was late, close to 10pm. As always, she called Hannah before bed to check on her.</p>
+        <p>Even in the middle of her own life, she made time for her children.</p>
+      </div>
+    </div>
+
+    <!-- INDIVIDUAL TRIBUTES - GRANDCHILDREN -->
+    <h3 class="tribute-group-title">&#10084; From the Grandchildren</h3>
+
+    <!-- Bethany Nyamikeh -->
+    <div class="tribute-card">
+      <div class="tribute-header" onclick="toggleTribute(this)">
+        <div class="tribute-header-info">
+          <h3>Bethany Nyamikeh</h3>
+          <span class="tribute-relation">Granddaughter</span>
+        </div>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="tribute-body">
+        <p>I am Bethany Nyamikeh, one of my grandmother's granddaughters. As you all know, my grandmother, Cecilia Gyan, has gone to be with the Lord.</p>
+      </div>
+    </div>
+
+    <!-- Benedicta Nyamikeh -->
+    <div class="tribute-card">
+      <div class="tribute-header" onclick="toggleTribute(this)">
+        <div class="tribute-header-info">
+          <h3>Benedicta Nyamikeh</h3>
+          <span class="tribute-relation">Granddaughter</span>
+        </div>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="tribute-body">
+        <p>My name is Benedicta Nyamikeh, and I am one of Cecilia Gyan's grandchildren. Grandma was truly unforgettable.</p>
+      </div>
+    </div>
+
+    <!-- Maureen Sarpong-Danquah -->
+    <div class="tribute-card">
+      <div class="tribute-header" onclick="toggleTribute(this)">
+        <div class="tribute-header-info">
+          <h3>Maureen Sarpong-Danquah</h3>
+          <span class="tribute-relation">Granddaughter</span>
+        </div>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="tribute-body">
+        <p>My Nana, Sixteen, meant so much to me. She showed me love, strength, and what it means to care for family.</p>
+        <p>I will always be grateful that she was my grandmother, and I will carry her in my heart forever.</p>
+      </div>
+    </div>
+
+    <!-- Marino Sarpong-Danquah -->
+    <div class="tribute-card">
+      <div class="tribute-header" onclick="toggleTribute(this)">
+        <div class="tribute-header-info">
+          <h3>Marino Sarpong-Danquah</h3>
+          <span class="tribute-relation">Grandson</span>
+        </div>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="tribute-body">
+        <p>When I was a child, my grandma was my constant companion&mdash;she went everywhere with me. Every time she came to visit, she would take me by the hand and walk with me to the grocery store.</p>
+      </div>
+    </div>
+
+    <!-- Taurus Sarpong-Danquah -->
+    <div class="tribute-card">
+      <div class="tribute-header" onclick="toggleTribute(this)">
+        <div class="tribute-header-info">
+          <h3>Taurus Sarpong-Danquah</h3>
+          <span class="tribute-relation">Grandson</span>
+        </div>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="tribute-body">
+        <p>Today, I'm trying to find the words to talk about my grandmother, but honestly, nothing feels like enough. She wasn't just my grandma, she was my best friend, my safe place, my everything. She was the one I was closest to, and losing her feels like losing a part of myself.</p>
+        <p>She understood me in a way no one else did. I didn't have to explain myself to her, she just got it. No matter what I was going through, she was always there for me, always listening, always loving me without judgment. Her love was something I never had to question, and that's something I'll never take for granted.</p>
+        <div class="tribute-extra" id="taurus-tribute-extra">
+          <p>It hurts knowing I can't call her, can't sit with her, can't hear her voice the way I used to. The little things are what hurt the most. I would do anything just to have one more moment with her.</p>
+          <p>But I know she's still with me in the way I think, the way I love, the way I carry myself. Everything she poured into me didn't leave, and it never will.</p>
+          <p>I'm going to keep going, keep growing, and keep making her proud, because that's what she would want for me.</p>
+          <p>I miss you more than I can even put into words, Grandma. I love you forever, and I'll carry you with me for the rest of my life.</p>
+        </div>
+        <button class="read-more-btn" onclick="toggleReadMore(this, 'taurus-tribute-extra')">Read more</button>
+      </div>
+    </div>
+
+    <!-- Jake Ofori -->
+    <div class="tribute-card">
+      <div class="tribute-header" onclick="toggleTribute(this)">
+        <div class="tribute-header-info">
+          <h3>Jake Ofori</h3>
+          <span class="tribute-relation">Grandson</span>
+        </div>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="tribute-body">
+        <p>When I was a child, my grandma was my constant companion&mdash;she went everywhere with me. One of the most vivid memories I have is when she took me to our hometown.</p>
+        <p>I got sick during that trip, and seeing her so scared was something I'll never forget.</p>
+      </div>
+    </div>
+
+    <!-- Joseph -->
+    <div class="tribute-card">
+      <div class="tribute-header" onclick="toggleTribute(this)">
+        <div class="tribute-header-info">
+          <h3>Joseph</h3>
+          <span class="tribute-relation">Grandson</span>
+        </div>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="tribute-body">
+        <p>Grandma, You were one special woman&mdash;and even though you lived a full and beautiful life, losing you has left a silence that words cannot fill.</p>
+      </div>
+    </div>
+
+    <!-- Emma Bosompem -->
+    <div class="tribute-card">
+      <div class="tribute-header" onclick="toggleTribute(this)">
+        <div class="tribute-header-info">
+          <h3>Emma Bosompem</h3>
+          <span class="tribute-relation">Grandchild</span>
+        </div>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="tribute-body">
+        <p>Grandma, we love you so much. Thank you for teaching us how to pray and trust God. Your favorite scriptures, Psalm 121 and Psalm 91, remind us that our help and protection come from the Lord.</p>
+      </div>
+    </div>
+
+    <!-- Elyana Bosompem -->
+    <div class="tribute-card">
+      <div class="tribute-header" onclick="toggleTribute(this)">
+        <div class="tribute-header-info">
+          <h3>Elyana Bosompem</h3>
+          <span class="tribute-relation">Grandchild</span>
+        </div>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="tribute-body">
+        <p>Today I want to honor my grandma. She was funny. She could make me laugh without even trying. Even when I did not feel like smiling, she found a way.</p>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- ===== FAMILY GALLERY ===== -->
-<section class="section gold-bg" id="gallery">
-  <div class="section-inner">
-    <h2 class="section-title">Family Gallery</h2>
-    <div class="section-divider"></div>
+<!-- ===== GALLERY ===== -->
+<section class="section" id="gallery">
+  <div class="container">
+    <div class="section-header">
+      <h2>Photo Gallery</h2>
+      <div class="ornament"><span></span><span class="ornament-icon">&#10053;</span><span></span></div>
+    </div>
     <div class="gallery-grid">
-      <div class="gallery-item" onclick="openLightbox(this)"><img src="images/headshots/1.JPG" alt="Family photo" loading="lazy"></div>
-      <div class="gallery-item" onclick="openLightbox(this)"><img src="images/headshots/2.jpg" alt="Family photo" loading="lazy"></div>
-      <div class="gallery-item" onclick="openLightbox(this)"><img src="images/headshots/2a.JPG" alt="Family photo" loading="lazy"></div>
-      <div class="gallery-item" onclick="openLightbox(this)"><img src="images/headshots/3.jpg" alt="Family photo" loading="lazy"></div>
-      <div class="gallery-item" onclick="openLightbox(this)"><img src="images/headshots/4.JPG" alt="Family photo" loading="lazy"></div>
-      <div class="gallery-item" onclick="openLightbox(this)"><img src="images/headshots/5.jpg" alt="Family photo" loading="lazy"></div>
-      <div class="gallery-item" onclick="openLightbox(this)"><img src="images/headshots/5a.jpg" alt="Family photo" loading="lazy"></div>
-      <div class="gallery-item" onclick="openLightbox(this)"><img src="images/headshots/6.JPG" alt="Family photo" loading="lazy"></div>
-      <div class="gallery-item" onclick="openLightbox(this)"><img src="images/headshots/7.jpg" alt="Family photo" loading="lazy"></div>
-      <div class="gallery-item" onclick="openLightbox(this)"><img src="images/headshots/7b.JPG" alt="Family photo" loading="lazy"></div>
-      <div class="gallery-item" onclick="openLightbox(this)"><img src="images/headshots/8.jpeg" alt="Family photo" loading="lazy"></div>
-      <div class="gallery-item" onclick="openLightbox(this)"><img src="images/headshots/9.jpg" alt="Family photo" loading="lazy"></div>
-      <div class="gallery-item" onclick="openLightbox(this)"><img src="images/headshots/10.png" alt="Family photo" loading="lazy"></div>
-      <div class="gallery-item" onclick="openLightbox(this)"><img src="images/headshots/2.png" alt="Family photo" loading="lazy"></div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="images/cover.jpg" alt="Booklet Cover" loading="lazy">
+        <div class="gallery-caption">Memorial Booklet Cover</div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="images/biography.jpg" alt="Biography" loading="lazy">
+        <div class="gallery-caption">Biography</div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="images/gallery1.jpg" alt="Photo Collage 1" loading="lazy">
+        <div class="gallery-caption">Cherished Memories</div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="images/gallery2.jpg" alt="Photo Collage 2" loading="lazy">
+        <div class="gallery-caption">A Life Well Lived</div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="images/kids_ghana.jpg" alt="Kids from Ghana" loading="lazy">
+        <div class="gallery-caption">Children in Ghana</div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="images/back_cover.jpg" alt="80 and Fabulous" loading="lazy">
+        <div class="gallery-caption">80 &amp; Fabulous</div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close" aria-label="Close">&times;</button>
-  <img src="" alt="Full size photo" id="lightbox-img">
+  <span class="lightbox-close">&times;</span>
+  <img id="lightbox-img" src="" alt="Gallery Image">
 </div>
 
 <!-- ===== BURIAL CEREMONY ===== -->
-<section class="section" id="burial">
-  <div class="section-inner">
-    <h2 class="section-title">Burial Ceremony</h2>
-    <div class="section-divider"></div>
-    <div class="burial-info">
-      <div class="burial-location">Mountain View Cemetery</div>
-      <div class="burial-address">Shrewsbury, MA 01545</div>
-      <div class="burial-time">12:00 PM &ndash; 1:00 PM</div>
+<section class="section section-alt" id="burial">
+  <div class="container">
+    <div class="section-header">
+      <h2>Burial Ceremony</h2>
+      <div class="ornament"><span></span><span class="ornament-icon">&#10013;</span><span></span></div>
     </div>
-    <ul class="service-items">
-      <li class="service-item fade-in">
-        <span class="service-icon">&#128591;</span>
-        <div class="service-content">
-          <div class="service-label">Procession to Cemetery</div>
-          <div class="service-detail">Moderator</div>
+    <div class="burial-schedule">
+      <div class="burial-item">
+        <div class="burial-time">
+          <div class="time">9:00</div>
+          <div class="period">AM</div>
         </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#127932;</span>
-        <div class="service-content">
-          <div class="service-label">Song</div>
-          <div class="service-detail">Mrs. Annin-Agyei &mdash; <a href="#hymn-my-faith">My Faith Has Found a Resting Place</a></div>
+        <div class="burial-info">
+          <h3>Viewing</h3>
+          <p>Mercadante Funeral Home</p>
+          <p>370 Plantation Street, Worcester, MA 01605</p>
         </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#10013;</span>
-        <div class="service-content">
-          <div class="service-label">Committal</div>
-          <div class="service-detail">Apostle Dr. Vasco Obroni</div>
+      </div>
+      <div class="burial-item">
+        <div class="burial-time">
+          <div class="time">10:00</div>
+          <div class="period">AM</div>
         </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#128591;</span>
-        <div class="service-content">
-          <div class="service-label">Prayer</div>
-          <div class="service-detail">Apostle Dr. Vasco Obroni</div>
+        <div class="burial-info">
+          <h3>Funeral Service</h3>
+          <p>Mercadante Funeral Home</p>
+          <p>370 Plantation Street, Worcester, MA 01605</p>
         </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#128144;</span>
-        <div class="service-content">
-          <div class="service-label">Vote of Thanks</div>
-          <div class="service-detail">Family &mdash; Mrs. Mary Boaheng</div>
+      </div>
+      <div class="burial-item">
+        <div class="burial-time">
+          <div class="time">12:00</div>
+          <div class="period">PM</div>
         </div>
-      </li>
-      <li class="service-item fade-in">
-        <span class="service-icon">&#10013;</span>
-        <div class="service-content">
-          <div class="service-label">Benediction</div>
-          <div class="service-detail">Pastor Maryjane Anene</div>
+        <div class="burial-info">
+          <h3>Committal &amp; Burial</h3>
+          <p>Mountain View Cemetery</p>
+          <p>Shrewsbury, MA 01545</p>
         </div>
-      </li>
-    </ul>
+      </div>
+      <div class="burial-item">
+        <div class="burial-time">
+          <div class="time">1:00</div>
+          <div class="period">PM</div>
+        </div>
+        <div class="burial-info">
+          <h3>Repast / Reception</h3>
+          <p>Location to be announced</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- ===== DIRECTIONS ===== -->
-<section class="section gold-bg" id="directions">
-  <div class="section-inner">
-    <h2 class="section-title">Directions</h2>
-    <div class="section-divider"></div>
-
-    <div class="directions-card fade-in">
-      <h3 class="directions-title">Mercadante Funeral Home &amp; Chapel</h3>
-      <p class="directions-address">370 Plantation Street, Worcester, MA 01605</p>
-      <div class="map-embed">
-        <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=370+Plantation+Street,+Worcester,+MA+01605&zoom=15" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mercadante Funeral Home location"></iframe>
-      </div>
+<section class="section" id="directions">
+  <div class="container">
+    <div class="section-header">
+      <h2>Directions</h2>
+      <div class="ornament"><span></span><span class="ornament-icon">&#9670;</span><span></span></div>
     </div>
-
-    <div class="directions-card fade-in">
-      <h3 class="directions-title">Directions to Mountain View Cemetery</h3>
-      <p class="directions-address">Mountain View Cemetery, Shrewsbury, MA 01545</p>
-      <div class="map-embed">
-        <iframe src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&origin=370+Plantation+Street,+Worcester,+MA+01605&destination=Mountain+View+Cemetery,+Shrewsbury,+MA+01545&mode=driving" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Directions from Funeral Home to Cemetery"></iframe>
+    <div class="directions-grid">
+      <div class="direction-card">
+        <h3>Mercadante Funeral Home</h3>
+        <p>370 Plantation Street, Worcester, MA 01605</p>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2944.8!2d-71.8027!3d42.2795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e406a8e7f1f5b1%3A0x4a4c9b8d5d5e3f1a!2sMercadante+Funeral+Home+%26+Chapels!5e0!3m2!1sen!2sus!4v1700000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="direction-card">
+        <h3>Mountain View Cemetery</h3>
+        <p>Shrewsbury, MA 01545</p>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2944.0!2d-71.7280!3d42.2960!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e4064e6e0bb8f7%3A0x1b2e3a4d5c6f7890!2sMountain+View+Cemetery!5e0!3m2!1sen!2sus!4v1700000000001" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ===== DONATIONS ===== -->
-<section class="section" id="donate">
-  <div class="section-inner donate-section">
-    <h2 class="section-title">Support the Family</h2>
-    <div class="section-divider"></div>
-    <p class="donate-message">If you would like to support the family during this time, donations can be sent to Hannah Bosompem via CashApp or Zelle.</p>
-    <div class="donate-buttons">
-      <a href="https://cash.app/$HannahBosompem" target="_blank" rel="noopener noreferrer" class="donate-btn primary">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-        CashApp &mdash; $HannahBosompem
-      </a>
-      <span class="donate-btn secondary" style="cursor:default;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15h0M12 15h0"/></svg>
-        Zelle &mdash; 917-254-7887
-      </span>
+<section class="section section-dark" id="donate">
+  <div class="container">
+    <div class="section-header">
+      <h2>Donations</h2>
+      <div class="ornament"><span></span><span class="ornament-icon">&#10084;</span><span></span></div>
+    </div>
+    <div class="donate-box">
+      <div class="donate-name">Josephine Putu</div>
+      <p class="donate-note">In honor of our beloved Cecilia Gyan, donations may be sent to Josephine Putu via CashApp or Zelle.</p>
+      <div class="donate-phone">+1 (646) 379-2482</div>
+      <div class="donate-buttons">
+        <a href="https://cash.app/$JosephinePutu" target="_blank" class="donate-btn cashapp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.59 3.47A5.1 5.1 0 0 0 20.53.41C19.63.14 18.66 0 17.64 0H6.36C5.34 0 4.37.14 3.47.41A5.1 5.1 0 0 0 .41 3.47C.14 4.37 0 5.34 0 6.36v11.28c0 1.02.14 1.99.41 2.89a5.1 5.1 0 0 0 3.06 3.06c.9.27 1.87.41 2.89.41h11.28c1.02 0 1.99-.14 2.89-.41a5.1 5.1 0 0 0 3.06-3.06c.27-.9.41-1.87.41-2.89V6.36c0-1.02-.14-1.99-.41-2.89zM17.2 14.41c-.31.9-.82 1.63-1.54 2.18-.72.55-1.56.91-2.53 1.07v1.56c0 .35-.28.63-.63.63h-1.38a.63.63 0 0 1-.63-.63v-1.52a8.74 8.74 0 0 1-3.02-1.13.52.52 0 0 1-.13-.74l.9-1.27a.52.52 0 0 1 .72-.13 6.58 6.58 0 0 0 2.59.91c.96.12 1.76-.03 2.4-.44.64-.41.87-.99.68-1.74-.13-.52-.42-.9-.87-1.15-.45-.24-1.22-.47-2.3-.68-1.34-.27-2.4-.72-3.2-1.34-.8-.62-1.27-1.52-1.4-2.7-.1-.88.07-1.67.5-2.37.43-.7 1.04-1.25 1.82-1.64.5-.25 1.04-.42 1.62-.51V3.55c0-.35.28-.63.63-.63h1.38c.35 0 .63.28.63.63v1.38c.82.14 1.59.4 2.3.78.32.17.42.56.23.87l-.7 1.15a.52.52 0 0 1-.73.17 5.52 5.52 0 0 0-2.18-.67c-.89-.08-1.62.08-2.2.48-.58.4-.8.96-.64 1.67.12.52.42.9.88 1.14.46.24 1.28.48 2.44.71 1.28.25 2.3.7 3.05 1.33.76.64 1.17 1.5 1.24 2.6.05.77-.07 1.45-.38 2.05z"/></svg>
+          CashApp
+        </a>
+        <a href="#" class="donate-btn zelle" onclick="alert('Send via Zelle to: +1 (646) 379-2482\nRecipient: Josephine Putu'); return false;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.559 24h-2.841a.483.483 0 0 1-.483-.483v-3.164a9.088 9.088 0 0 1-4.748-2.053.483.483 0 0 1-.009-.69l2.005-2.005a.483.483 0 0 1 .654-.028 5.727 5.727 0 0 0 3.744 1.394c1.513 0 2.615-.58 2.615-1.749 0-1.08-.848-1.661-3.127-2.389C8.2 11.724 6.162 10.4 6.162 7.558c0-2.496 1.767-4.376 4.587-4.87V.483c0-.267.216-.483.483-.483h2.841c.267 0 .483.216.483.483v2.296a8.183 8.183 0 0 1 3.742 1.472.483.483 0 0 1 .038.708l-1.844 1.844a.483.483 0 0 1-.631.044 5.266 5.266 0 0 0-2.957-.906c-1.69 0-2.263.795-2.263 1.572 0 .957.714 1.484 3.259 2.3 3.187 1.016 4.905 2.561 4.905 5.379 0 2.585-1.848 4.553-4.762 5.038v3.187a.483.483 0 0 1-.484.483z"/></svg>
+          Zelle
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ===== ACKNOWLEDGMENT ===== -->
-<section class="acknowledgment">
-  <div class="section-inner">
-    <h2 class="section-title">In Loving Memory</h2>
-    <div class="section-divider"></div>
-    <p class="acknowledgment-text">The family of Cecilia Gyan gratefully acknowledges your prayers, love, calls, messages, and every act of support during this season of loss. May the Lord richly bless you for standing with us.</p>
-    <blockquote class="acknowledgment-quote">
-      &ldquo;The Lord is near to the brokenhearted and saves the crushed in spirit.&rdquo;
-      <cite>&mdash; Psalm 34:18</cite>
-    </blockquote>
+<!-- ===== ACKNOWLEDGMENTS ===== -->
+<section class="section section-alt" id="acknowledgments">
+  <div class="container">
+    <div class="section-header">
+      <h2>Acknowledgments</h2>
+      <div class="ornament"><span></span><span class="ornament-icon">&#10013;</span><span></span></div>
+    </div>
+    <div class="ack-text">
+      <p>The family of the late Cecilia Gyan wishes to express our deepest and heartfelt gratitude to everyone who has stood by us during this difficult time. Your prayers, calls, visits, and generous support have been a tremendous source of comfort and strength.</p>
+      <p style="margin-top: 15px;">We are truly thankful to all family members, friends, church members, and well-wishers who have shown us love and compassion. Your presence and kindness have reminded us that we do not grieve alone.</p>
+      <p style="margin-top: 15px;">May the good Lord richly bless each and every one of you for your love and generosity.</p>
+      <p style="margin-top: 25px; font-style: italic; color: var(--accent);">&mdash; The Family of Cecilia Gyan</p>
+    </div>
   </div>
 </section>
 
 <!-- ===== FOOTER ===== -->
 <footer class="footer">
-  <div class="footer-name script">Cecilia Gyan</div>
-  <div class="footer-dates">December 24, 1944 &mdash; February 9, 2026</div>
-  <div class="footer-divider"></div>
-  <blockquote class="footer-quote">
-    &ldquo;He will wipe every tear from their eyes. There will be no more death or mourning or crying or pain, for the old order of things has passed away.&rdquo;
-    <cite>&mdash; Revelation 21:4</cite>
-  </blockquote>
-  <div class="footer-cross">&#10013;</div>
+  <div class="footer-name">Cecilia Gyan</div>
+  <div class="footer-dates">1945 &mdash; 2025</div>
+  <div class="footer-verse">
+    "Precious in the sight of the Lord is the death of his saints." &mdash; Psalm 116:15
+  </div>
 </footer>
 
+<!-- ===== JAVASCRIPT ===== -->
 <script>
-// Scripture version toggle
-function switchVersion(version, btn) {
-  document.querySelectorAll('.version-btn').forEach(function(b) {
-    b.classList.remove('active');
-  });
-  btn.classList.add('active');
-  document.querySelectorAll('.scripture-version').forEach(function(sv) {
-    sv.classList.remove('active');
-  });
-  document.querySelectorAll('.scripture-version.' + version).forEach(function(sv) {
-    sv.classList.add('active');
-  });
+// Mobile menu toggle
+function toggleMenu() {
+  var links = document.getElementById('navLinks');
+  links.classList.toggle('open');
 }
 
-// Tribute collapse/expand
-function toggleTribute(header) {
-  var card = header.closest('.tribute-card');
-  var body = card.querySelector('.tribute-body');
-  if (card.classList.contains('open')) {
-    body.style.maxHeight = null;
-    card.classList.remove('open');
-  } else {
-    body.style.maxHeight = body.scrollHeight + 'px';
-    card.classList.add('open');
+// Close mobile menu when a nav link is clicked
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+// Hymn accordion
+function toggleHymn(header) {
+  var body = header.nextElementSibling;
+  var isOpen = body.classList.contains('open');
+
+  // Close all hymn bodies
+  document.querySelectorAll('.hymn-body').forEach(function(b) { b.classList.remove('open'); });
+  document.querySelectorAll('.hymn-header').forEach(function(h) { h.classList.remove('open'); });
+
+  if (!isOpen) {
+    body.classList.add('open');
+    header.classList.add('open');
   }
 }
 
-// Lightbox
-function openLightbox(el) {
-  var img = el.querySelector('img');
+// Tribute accordion
+function toggleTribute(header) {
+  var body = header.nextElementSibling;
+  var isOpen = body.classList.contains('open');
+
+  header.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// Read more toggle
+function toggleReadMore(btn, extraId) {
+  var extra = document.getElementById(extraId);
+  if (extra.classList.contains('open')) {
+    extra.classList.remove('open');
+    btn.textContent = 'Read more';
+  } else {
+    extra.classList.add('open');
+    btn.textContent = 'Read less';
+  }
+}
+
+// Scripture version toggle
+function switchVersion(version, btn) {
+  document.querySelectorAll('.scripture-toggle button').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+
+  if (version === 'kjv') {
+    document.querySelectorAll('.kjv-text').forEach(function(el) { el.style.display = 'block'; });
+    document.querySelectorAll('.niv-text').forEach(function(el) { el.style.display = 'none'; });
+  } else {
+    document.querySelectorAll('.kjv-text').forEach(function(el) { el.style.display = 'none'; });
+    document.querySelectorAll('.niv-text').forEach(function(el) { el.style.display = 'block'; });
+  }
+}
+
+// Gallery lightbox
+function openLightbox(item) {
+  var img = item.querySelector('img');
   var lightbox = document.getElementById('lightbox');
   var lightboxImg = document.getElementById('lightbox-img');
   lightboxImg.src = img.src;
-  lightbox.classList.add('active');
+  lightboxImg.alt = img.alt;
+  lightbox.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
 function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('active');
+  document.getElementById('lightbox').classList.remove('open');
   document.body.style.overflow = '';
 }
 
+// Close lightbox with Escape key
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'Escape') {
+    closeLightbox();
+  }
 });
 
-// Intersection Observer for fade-in animations
-var observer = new IntersectionObserver(function(entries) {
-  entries.forEach(function(entry) {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
+// Active nav highlight on scroll
+var sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', function() {
+  var scrollPos = window.scrollY + 100;
+  sections.forEach(function(section) {
+    var top = section.offsetTop;
+    var height = section.offsetHeight;
+    var id = section.getAttribute('id');
+    var link = document.querySelector('.nav-links a[href="#' + id + '"]');
+    if (link) {
+      if (scrollPos >= top && scrollPos < top + height) {
+        document.querySelectorAll('.nav-links a').forEach(function(a) { a.classList.remove('active'); });
+        link.classList.add('active');
+      }
     }
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-document.querySelectorAll('.fade-in').forEach(function(el) {
-  observer.observe(el);
 });
 
-// Active nav highlighting
-var navSections = document.querySelectorAll('section[id]');
-var navLinks = document.querySelectorAll('.nav-link');
+// Open hymn if navigated via song link
+if (window.location.hash && window.location.hash.startsWith('#song-')) {
+  var target = document.querySelector(window.location.hash);
+  if (target) {
+    var header = target.querySelector('.hymn-header');
+    if (header) {
+      setTimeout(function() { toggleHymn(header); }, 300);
+    }
+  }
+}
 
-window.addEventListener('scroll', function() {
-  var scrollY = window.pageYOffset;
-  navSections.forEach(function(section) {
-    var sectionTop = section.offsetTop - 100;
-    var sectionHeight = section.offsetHeight;
-    var sectionId = section.getAttribute('id');
-    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-      navLinks.forEach(function(link) {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + sectionId) {
-          link.classList.add('active');
-        }
-      });
+// Handle song link clicks to open hymn accordion
+document.querySelectorAll('.song-link').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    var targetId = this.getAttribute('href');
+    var target = document.querySelector(targetId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      var header = target.querySelector('.hymn-header');
+      if (header) {
+        setTimeout(function() {
+          if (!header.classList.contains('open')) {
+            toggleHymn(header);
+          }
+        }, 500);
+      }
     }
   });
 });
 </script>
+
 </body>
 </html>
