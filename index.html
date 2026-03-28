@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cecelia Gyan — Celebration of Life</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #1a1a1a;
+      font-family: 'Georgia', serif;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+    }
+
+    header {
+      padding: 20px 0 10px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: #c9a84c;
+      letter-spacing: 2px;
+    }
+    header .subtitle {
+      font-size: 0.85rem;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .booklet-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 10px 60px;
+      position: relative;
+    }
+
+    .spread {
+      display: flex;
+      max-height: 85vh;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .page {
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .page img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .page.left {
+      border-right: 1px solid #ddd;
+      box-shadow: inset -4px 0 12px rgba(0,0,0,0.08);
+    }
+    .page.right {
+      box-shadow: inset 4px 0 12px rgba(0,0,0,0.08);
+    }
+
+    .spread.single {
+      justify-content: center;
+    }
+    .spread.single .page {
+      border: none;
+      box-shadow: none;
+    }
+
+    .nav-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(201, 168, 76, 0.15);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      color: #c9a84c;
+      font-size: 2rem;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      z-index: 100;
+    }
+    .nav-btn:hover {
+      background: rgba(201, 168, 76, 0.3);
+      border-color: #c9a84c;
+    }
+    .nav-btn:disabled {
+      opacity: 0.2;
+      cursor: default;
+    }
+    .nav-btn.prev { left: 12px; }
+    .nav-btn.next { right: 12px; }
+
+    .controls {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      background: #111;
+    }
+
+    .page-info {
+      font-size: 0.85rem;
+      color: #999;
+      min-width: 120px;
+      text-align: center;
+    }
+
+    .view-toggle {
+      display: flex;
+      gap: 4px;
+    }
+    .view-toggle button {
+      background: #333;
+      border: 1px solid #555;
+      color: #aaa;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .view-toggle button.active {
+      background: #c9a84c;
+      border-color: #c9a84c;
+      color: #1a1a1a;
+      font-weight: bold;
+    }
+
+    .thumbnails-btn {
+      background: #333;
+      border: 1px solid #555;
+      color: #aaa;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .thumbnails-btn:hover {
+      border-color: #c9a84c;
+      color: #c9a84c;
+    }
+
+    .thumbnail-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 200;
+      overflow-y: auto;
+      padding: 30px;
+    }
+    .thumbnail-overlay.visible { display: block; }
+    .thumbnail-overlay .close-btn {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: #c9a84c;
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 201;
+    }
+    .thumbnail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .thumb {
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 4px;
+      overflow: hidden;
+      transition: all 0.2s;
+      background: #fff;
+    }
+    .thumb:hover {
+      border-color: #c9a84c;
+      transform: scale(1.03);
+    }
+    .thumb.active {
+      border-color: #c9a84c;
+    }
+    .thumb img {
+      width: 100%;
+      display: block;
+    }
+    .thumb-label {
+      text-align: center;
+      padding: 4px;
+      font-size: 0.75rem;
+      color: #999;
+      background: #222;
+    }
+
+    .page {
+      width: 45vw;
+      max-width: 500px;
+      height: auto;
+      aspect-ratio: 419 / 596;
+    }
+
+    body.single-view .page {
+      width: 55vw;
+      max-width: 600px;
+    }
+
+    .spread {
+      animation: fadeIn 0.25s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 900px) {
+      .page { width: 42vw; }
+      .booklet-container { padding: 10px 50px; }
+    }
+
+    @media (max-width: 600px) {
+      body { overflow-x: hidden; }
+      .page { width: 90vw; max-width: none; }
+      .spread { flex-direction: column; }
+      .booklet-container { padding: 10px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>CECELIA GYAN</h1>
+    <div class="subtitle">Celebration of Life &#183; 12/24/1944 &#8211; 02/09/2026</div>
+  </header>
+
+  <div class="booklet-container">
+    <button class="nav-btn prev" id="prevBtn">&#8249;</button>
+    <div class="spread" id="spread"></div>
+    <button class="nav-btn next" id="nextBtn">&#8250;</button>
+  </div>
+
+  <div class="controls">
+    <div class="view-toggle">
+      <button id="btnSpread" class="active">Spread</button>
+      <button id="btnSingle">Single</button>
+    </div>
+    <div class="page-info" id="pageInfo"></div>
+    <button class="thumbnails-btn" id="thumbBtn">Thumbnails</button>
+  </div>
+
+  <div class="thumbnail-overlay" id="thumbOverlay">
+    <button class="close-btn" id="thumbClose">&#215;</button>
+    <div class="thumbnail-grid" id="thumbGrid"></div>
+  </div>
+
+  <script>
+    const TOTAL_PAGES = 40;
+    const svgPath = function(n) {
+      return 'svg_v6/page_' + String(n).padStart(2, '0') + '.svg';
+    };
+
+    let currentSpread = 0;
+    let viewMode = 'spread';
+
+    function clearElement(el) {
+      while (el.firstChild) {
+        el.removeChild(el.firstChild);
+      }
+    }
+
+    function buildSpreads() {
+      var spreads = [];
+      if (viewMode === 'single') {
+        for (var i = 1; i <= TOTAL_PAGES; i++) {
+          spreads.push([i]);
+        }
+      } else {
+        spreads.push([1]);
+        for (var i = 2; i <= TOTAL_PAGES - 1; i += 2) {
+          var pair = [i];
+          if (i + 1 <= TOTAL_PAGES - 1) pair.push(i + 1);
+          spreads.push(pair);
+        }
+        if (TOTAL_PAGES > 1) spreads.push([TOTAL_PAGES]);
+      }
+      return spreads;
+    }
+
+    function render() {
+      var spreads = buildSpreads();
+      if (currentSpread >= spreads.length) currentSpread = spreads.length - 1;
+      if (currentSpread < 0) currentSpread = 0;
+
+      var pages = spreads[currentSpread];
+      var spreadEl = document.getElementById('spread');
+      var isSingle = pages.length === 1;
+
+      spreadEl.className = 'spread' + (isSingle ? ' single' : '');
+      clearElement(spreadEl);
+
+      pages.forEach(function(pageNum, idx) {
+        var div = document.createElement('div');
+        div.className = 'page ' + (isSingle ? '' : (idx === 0 ? 'left' : 'right'));
+        var img = document.createElement('img');
+        img.src = svgPath(pageNum);
+        img.alt = 'Page ' + pageNum;
+        img.draggable = false;
+        div.appendChild(img);
+        spreadEl.appendChild(div);
+      });
+
+      var pageNums = pages.join(' & ');
+      document.getElementById('pageInfo').textContent = 'Page ' + pageNums + ' of ' + TOTAL_PAGES;
+
+      document.getElementById('prevBtn').disabled = currentSpread === 0;
+      document.getElementById('nextBtn').disabled = currentSpread === spreads.length - 1;
+
+      document.body.classList.toggle('single-view', viewMode === 'single');
+    }
+
+    function navigate(dir) {
+      var spreads = buildSpreads();
+      var next = currentSpread + dir;
+      if (next >= 0 && next < spreads.length) {
+        currentSpread = next;
+        render();
+      }
+    }
+
+    function setView(mode) {
+      var oldSpreads = buildSpreads();
+      var oldPages = oldSpreads[currentSpread];
+      var firstVisiblePage = oldPages[0];
+
+      viewMode = mode;
+      document.getElementById('btnSpread').classList.toggle('active', mode === 'spread');
+      document.getElementById('btnSingle').classList.toggle('active', mode === 'single');
+
+      var newSpreads = buildSpreads();
+      currentSpread = 0;
+      for (var i = 0; i < newSpreads.length; i++) {
+        if (newSpreads[i].indexOf(firstVisiblePage) !== -1) {
+          currentSpread = i;
+          break;
+        }
+      }
+
+      render();
+    }
+
+    function goToPage(pageNum) {
+      var spreads = buildSpreads();
+      currentSpread = 0;
+      for (var i = 0; i < spreads.length; i++) {
+        if (spreads[i].indexOf(pageNum) !== -1) {
+          currentSpread = i;
+          break;
+        }
+      }
+      render();
+      document.getElementById('thumbOverlay').classList.remove('visible');
+    }
+
+    function toggleThumbnails() {
+      var overlay = document.getElementById('thumbOverlay');
+      overlay.classList.toggle('visible');
+      if (overlay.classList.contains('visible') && !overlay.dataset.loaded) {
+        var grid = document.getElementById('thumbGrid');
+        for (var i = 1; i <= TOTAL_PAGES; i++) {
+          (function(pageNum) {
+            var thumb = document.createElement('div');
+            thumb.className = 'thumb';
+            thumb.addEventListener('click', function() { goToPage(pageNum); });
+            var img = document.createElement('img');
+            img.src = svgPath(pageNum);
+            img.alt = 'Page ' + pageNum;
+            img.loading = 'lazy';
+            var label = document.createElement('div');
+            label.className = 'thumb-label';
+            label.textContent = 'Page ' + pageNum;
+            thumb.appendChild(img);
+            thumb.appendChild(label);
+            grid.appendChild(thumb);
+          })(i);
+        }
+        overlay.dataset.loaded = 'true';
+      }
+    }
+
+    // Event listeners
+    document.getElementById('prevBtn').addEventListener('click', function() { navigate(-1); });
+    document.getElementById('nextBtn').addEventListener('click', function() { navigate(1); });
+    document.getElementById('btnSpread').addEventListener('click', function() { setView('spread'); });
+    document.getElementById('btnSingle').addEventListener('click', function() { setView('single'); });
+    document.getElementById('thumbBtn').addEventListener('click', toggleThumbnails);
+    document.getElementById('thumbClose').addEventListener('click', toggleThumbnails);
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        navigate(-1);
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+        e.preventDefault();
+        navigate(1);
+      } else if (e.key === 'Escape') {
+        document.getElementById('thumbOverlay').classList.remove('visible');
+      }
+    });
+
+    // Init
+    render();
+  </script>
+</body>
+</html>
